@@ -1,9 +1,8 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import styled from "styled-components";
-require('icons/detail.svg')
-require('icons/account.svg')
-require('icons/statistics.svg')
+import Icon from "./Icon";
+
 const NavWrapper = styled.nav`
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
   line-height: 24px;
@@ -40,23 +39,15 @@ function Nav() {
       <ul>
         <li>
           <NavLink to="/detail" activeClassName="selected">
-            <svg className="icon">
-              <use xlinkHref="#detail"/>
-            </svg>
-            明细</NavLink>
+            <Icon name="detail"/>明细</NavLink>
         </li>
         <li>
           <NavLink to="/account" activeClassName="selected">
-            <svg className="icon">
-              <use xlinkHref="#account"/>
-            </svg>
-          记账</NavLink>
+            <Icon name="account"/>记账</NavLink>
         </li>
         <li>
           <NavLink to="/statistics" activeClassName="selected">
-            <svg className="icon">
-              <use xlinkHref="#statistics"/>
-            </svg>统计</NavLink>
+            <Icon name="statistics"/>统计</NavLink>
         </li>
       </ul>
     </NavWrapper>
