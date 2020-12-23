@@ -21,13 +21,15 @@ const Topbar = styled.section`
   }
 `
 const CategorySection = styled.section`
+  width: 60%;
   > ul{
-    display:flex;
-    background:#c4c4c4;
+     margin:0 auto;
+     display:flex;
     > li {
-      width: 50%; 
+      margin-right: 18px;
+      border-radius: 25px;
       text-align:center;
-      padding: 4px 0;
+      padding: 6px 16px;
       background-color: #f2f2f2;
       &.selected{
         border:1px solid #e1c748;
@@ -36,30 +38,38 @@ const CategorySection = styled.section`
     }
   }
 `
-
+const CateAndTimeWrapper = styled.section`
+  padding:12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
 
 function Account() {
   const onChange = (date: any, dateString: string) => {
     console.log(date, dateString);
   };
+  const style={'width':'80px','borderRadius':'25px','padding':'8px 6px'}
   return <Layout>
     <Topbar>
       <Icon name="left"/>
       <span>记账</span>
       <Icon/>
     </Topbar>
-    <CategorySection>
-      <ul>
-        <li className="selected">支出</li>
-        <li>收入</li>
-      </ul>
-    </CategorySection>
-      <ConfigProvider locale={zhCN}>
-        <DatePicker onChange={onChange}
-                    picker="month"
-                    // style={style}
-        />
-      </ConfigProvider>
+    <CateAndTimeWrapper>
+      <CategorySection>
+        <ul>
+          <li className="selected">支出</li>
+          <li>收入</li>
+        </ul>
+      </CategorySection>
+        <ConfigProvider locale={zhCN}>
+          <DatePicker onChange={onChange}
+                      picker="month"
+                      style={style}
+          />
+        </ConfigProvider>
+    </CateAndTimeWrapper>
   </Layout>;
 }
 
