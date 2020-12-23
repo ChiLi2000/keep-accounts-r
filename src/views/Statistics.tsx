@@ -1,7 +1,8 @@
 import React from "react";
+import Nav from "../components/Nav";
 
 function Statistics() {
-  return <h2>Statistics</h2>;
+  return <div>Statistics <Nav/></div>;
 }
 
 export default Statistics

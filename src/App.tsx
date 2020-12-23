@@ -3,7 +3,6 @@ import {
   HashRouter  as Router,
   Switch,
   Route,
-  Link,
   Redirect
 } from "react-router-dom";
 import Account from "./views/Account";
@@ -14,24 +13,6 @@ import NotFound from "./views/NotFound";
 function App() {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">/</Link>
-            </li>
-            <li>
-              <Link to="/detail">detail</Link>
-            </li>
-            <li>
-              <Link to="/account">account</Link>
-            </li>
-            <li>
-              <Link to="/statistics">statistics</Link>
-            </li>
-          </ul>
-        </nav>
-
         <Switch>
           <Redirect exact from="/" to="/account"/>
           <Route path="/detail">
@@ -47,7 +28,6 @@ function App() {
             <NotFound />
           </Route>
         </Switch>
-      </div>
     </Router>
   );
 }

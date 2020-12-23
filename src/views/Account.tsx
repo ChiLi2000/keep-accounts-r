@@ -1,7 +1,9 @@
 import React from "react";
+import Nav from "../components/Nav";
 
 function Account() {
-  return <h2>account</h2>;
+  return <div>account
+  <Nav/></div>;
 }
 
 export default Account
