@@ -1,8 +1,8 @@
 import React from "react";
-import Nav from "../components/Nav";
+import Layout from "components/Layout";
 
 function Statistics() {
-  return <div>Statistics <Nav/></div>;
+  return <Layout>Statistics</Layout>;
 }
 
 export default Statistics

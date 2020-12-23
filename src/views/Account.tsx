@@ -1,9 +1,8 @@
 import React from "react";
-import Nav from "../components/Nav";
+import Layout from "components/Layout";
 
 function Account() {
-  return <div>account
-  <Nav/></div>;
+  return <Layout>account</Layout>;
 }
 
 export default Account

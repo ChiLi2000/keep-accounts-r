@@ -1,8 +1,8 @@
 import React from "react";
-import Nav from "../components/Nav";
+import Layout from "components/Layout";
 
 function Detail() {
-  return <div>Detail <Nav/></div>;
+  return <Layout>Detail</Layout>;
 }
 
 export default Detail
