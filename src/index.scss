@@ -15,4 +15,12 @@ body {
   line-height: 1.2;
 }
 
+button,
+input {
+  font: inherit;
+}
+:focus{
+  outline: none;
+}
+
 

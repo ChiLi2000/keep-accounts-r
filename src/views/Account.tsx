@@ -67,7 +67,28 @@ const TagsSection = styled.section`
   }
   
 `;
-
+const NotesSection = styled.section`
+   font-size: 14px;
+   padding: 8px 0;
+   background: #f5f5f5;
+   >label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+   >input {
+      flex-grow: 1;
+      height: 40px;
+      background: transparent;
+      border: none;
+    }
+    >span{
+      font-size: 12px;
+      color: #999999;
+    }
+   }
+    
+`
 function Account() {
   const onChange = (date: any, dateString: string) => {
     console.log(date, dateString);
@@ -107,6 +128,12 @@ function Account() {
         <li><Icon name="add"/>住宿</li>
       </ul>
     </TagsSection>
+    <NotesSection>
+      <label>
+        <input type="text" placeholder="请输入备注"/>
+        <span>2/10</span>
+      </label>
+    </NotesSection>
   </Layout>;
 }
 
