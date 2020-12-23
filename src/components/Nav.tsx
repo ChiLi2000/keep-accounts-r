@@ -10,6 +10,7 @@ const NavWrapper = styled.nav`
   padding: 4px 0;
   >ul{
     display: flex;
+    margin-bottom: 0;
     >li{
       width: 33.333333%;
       text-align: center;
@@ -23,9 +24,9 @@ const NavWrapper = styled.nav`
           height: 32px;
         }
         &.selected{
-        color: red;
+        color: #e1c748;
         .icon{
-        fill:red;
+        fill:#e1c748;
         }
         }
        }  
