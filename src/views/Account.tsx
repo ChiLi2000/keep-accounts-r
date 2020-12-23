@@ -2,6 +2,10 @@ import React from "react";
 import Layout from "components/Layout";
 import styled from "styled-components";
 import Icon from "../components/Icon";
+import {DatePicker} from "antd";
+import {ConfigProvider} from "antd";
+import zhCN from "antd/lib/locale/zh_CN";
+import "moment/locale/zh-cn";
 
 const Topbar = styled.section`
   display:flex;
@@ -35,6 +39,9 @@ const CategorySection = styled.section`
 
 
 function Account() {
+  const onChange = (date: any, dateString: string) => {
+    console.log(date, dateString);
+  };
   return <Layout>
     <Topbar>
       <Icon name="left"/>
@@ -47,6 +54,12 @@ function Account() {
         <li>收入</li>
       </ul>
     </CategorySection>
+      <ConfigProvider locale={zhCN}>
+        <DatePicker onChange={onChange}
+                    picker="month"
+                    // style={style}
+        />
+      </ConfigProvider>
   </Layout>;
 }
 
