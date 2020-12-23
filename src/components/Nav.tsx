@@ -23,6 +23,12 @@ const NavWrapper = styled.nav`
           width:32px;
           height: 32px;
         }
+        &.selected{
+        color: red;
+        .icon{
+        fill:red;
+        }
+        }
        }  
      }
   }  
@@ -33,21 +39,21 @@ function Nav() {
     <NavWrapper>
       <ul>
         <li>
-          <NavLink to="/detail">
+          <NavLink to="/detail" activeClassName="selected">
             <svg className="icon">
               <use xlinkHref="#detail"/>
             </svg>
             明细</NavLink>
         </li>
         <li>
-          <NavLink to="/account">
+          <NavLink to="/account" activeClassName="selected">
             <svg className="icon">
               <use xlinkHref="#account"/>
             </svg>
           记账</NavLink>
         </li>
         <li>
-          <NavLink to="/statistics">
+          <NavLink to="/statistics" activeClassName="selected">
             <svg className="icon">
               <use xlinkHref="#statistics"/>
             </svg>统计</NavLink>
