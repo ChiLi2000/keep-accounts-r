@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Icon from "components/Icon";
 import React from "react";
-
+import {useHistory} from "react-router-dom";
 const Wrapper = styled.section`
   display:flex;
   justify-content: space-between;
@@ -16,10 +16,14 @@ const Wrapper = styled.section`
   }
 `;
 
-const Topbar = ()=>{
+const Topbar: React.FC = ()=>{
+  const history = useHistory();
+  const onClickBack = () => {
+    history.goBack();
+  };
   return (
     <Wrapper>
-      <Icon name="left"/>
+      <Icon name="left" onClick={onClickBack}/>
       <span>记账</span>
       <Icon/>
     </Wrapper>
