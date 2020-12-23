@@ -22,5 +22,9 @@ input {
 :focus{
   outline: none;
 }
-
+.clearfix::after{
+  content: '';
+  display: block;
+  clear: both;
+}
 
