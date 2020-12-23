@@ -19,7 +19,7 @@ const Topbar = styled.section`
     width: 28px;
     height: 28px;
   }
-`
+`;
 const CategorySection = styled.section`
   width: 60%;
   > ul{
@@ -37,19 +37,42 @@ const CategorySection = styled.section`
       }
     }
   }
-`
+`;
 const CateAndTimeWrapper = styled.section`
   padding:12px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
+`;
+const TagsSection = styled.section`
+  >ul{
+   margin: 8px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  >li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 14px;
+    padding: 6px 0;
+    width: 25%;
+    .icon{
+      width: 32px;
+      height: 32px;
+      margin-bottom: 4px;
+    }
+  }
+  }
+  
+`;
 
 function Account() {
   const onChange = (date: any, dateString: string) => {
     console.log(date, dateString);
   };
-  const style={'width':'80px','borderRadius':'25px','padding':'8px 6px'}
+  const style = {"width": "80px", "borderRadius": "25px", "padding": "8px 6px"};
   return <Layout>
     <Topbar>
       <Icon name="left"/>
@@ -63,13 +86,27 @@ function Account() {
           <li>收入</li>
         </ul>
       </CategorySection>
-        <ConfigProvider locale={zhCN}>
-          <DatePicker onChange={onChange}
-                      picker="month"
-                      style={style}
-          />
-        </ConfigProvider>
+      <ConfigProvider locale={zhCN}>
+        <DatePicker onChange={onChange}
+                    picker="month"
+                    style={style}
+        />
+      </ConfigProvider>
     </CateAndTimeWrapper>
+    <TagsSection>
+      <ul>
+        <li><Icon name="add"/>衣服</li>
+        <li><Icon name="add"/>住宿</li>
+        <li><Icon name="add"/>行驶</li>
+        <li><Icon name="add"/>食物</li>
+        <li><Icon name="add"/>衣服</li>
+        <li><Icon name="add"/>住宿</li>
+        <li><Icon name="add"/>衣服</li>
+        <li><Icon name="add"/>住宿</li>
+        <li><Icon name="add"/>衣服</li>
+        <li><Icon name="add"/>住宿</li>
+      </ul>
+    </TagsSection>
   </Layout>;
 }
 
