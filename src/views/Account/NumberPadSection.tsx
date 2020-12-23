@@ -13,7 +13,7 @@ const Wrapper = styled.section`
       text-align: right;
   }
   >.pad{
-      margin: 8px 14px;
+      margin: 4px 14px;
       >button{
       width: 25%;
       height: 56px;

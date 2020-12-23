@@ -9,7 +9,7 @@ const Wrapper = styled.section`
   line-height: 20px;
   padding: 12px 14px;
   background:white;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid grey;
   .icon{
     width: 28px;
     height: 28px;
