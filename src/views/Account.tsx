@@ -7,6 +7,7 @@ import {Topbar} from "./Account/Torbar";
 import {TagsSection} from "./Account/TagsSection";
 import {NotesSection} from "./Account/NotesSection";
 import moment from "moment";
+import {useRecords} from "../hooks/useRecords";
 
 const Outer = styled.div`
   display: flex;
@@ -25,18 +26,24 @@ const CateAndTimeWrapper = styled.section`
 `;
 
 export type Category = "-" | "+"
+const defaultFormDate = {
+  category: "-" as Category,
+  tagId: 1,
+  note: "",
+  amount: 0,
+  createdAt: moment(new Date().toISOString()).format("YYYY-MM-DD HH:mm:ss")
+};
 
 function Account() {
-  const [selected, setSelected] = useState({
-    category: "-" as Category,
-    tagId: 1,
-    note: "",
-    amount: 0,
-    createdAt: moment(new Date().toISOString()).format("YYYY-MM-DD HH:mm:ss")
-  });
-  const onChange=(obj:Partial<typeof selected>)=>{
-    setSelected({...selected,...obj})
-  }
+  const [selected, setSelected] = useState(defaultFormDate);
+  const onChange = (obj: Partial<typeof selected>) => {
+    setSelected({...selected, ...obj});
+  };
+  const {addRecord} = useRecords();
+  const submit = () => {
+    addRecord(selected);
+    setSelected(defaultFormDate);
+  };
 
   return (
     <Outer>
@@ -54,7 +61,9 @@ function Account() {
       <NotesSection value={selected.note}
                     onChange={note => onChange({note})}/>
       <NumberPadSection value={selected.amount}
-                        onChange={amount => onChange({amount})}/>
+                        onChange={amount => onChange({amount})}
+                        onOk={submit}
+      />
     </Outer>
   );
 }
