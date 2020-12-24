@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 const Wrapper = styled.section`
   >ul{
@@ -20,23 +20,43 @@ const Wrapper = styled.section`
       height: 32px;
       margin-bottom: 4px;
     }
+    &.selected{
+      color:#e1c748;
+      .icon{
+      fill:#e1c748;
+      }
+    }
   }
 }
 `;
-const TagsSection=()=>{
+
+type Tag = {
+  id:number,
+  name:string,
+  value:string
+}
+const X=[
+  {id: 1, name: "奖金", value: "奖金"},
+  {id: 2, name: "宠物", value: "宠物"},
+  {id: 3, name: "工资", value: "工资"},
+  {id: 4, name: "红包", value: "红包"},
+  {id: 5, name: "餐饮", value: "餐饮"}
+]
+const TagsSection: React.FC =()=>{
+  const [tags] = useState<Tag[]>(X);
+  const [selectedTagId,setSelectedTagId] = useState(1)
+  const onToggleTag = (tagId: number) => {
+    if (selectedTagId !== tagId) {
+      setSelectedTagId(tagId)
+    }
+  };
+  const getClass = (tagId: number) => selectedTagId === tagId ? "selected" : "";
   return (
     <Wrapper>
       <ul>
-        <li><Icon name="add"/>衣服</li>
-        <li><Icon name="add"/>住宿</li>
-        <li><Icon name="add"/>行驶</li>
-        <li><Icon name="add"/>食物</li>
-        <li><Icon name="add"/>衣服</li>
-        <li><Icon name="add"/>住宿</li>
-        <li><Icon name="add"/>衣服</li>
-        <li><Icon name="add"/>住宿</li>
-        <li><Icon name="add"/>衣服</li>
-        <li><Icon name="add"/>住宿</li>
+        {tags.map(tag =>
+          <li key={tag.id} onClick={() => {onToggleTag(tag.id);}} className={getClass(tag.id)}>
+            <Icon name={tag.value}/>{tag.name}</li>)}
       </ul>
     </Wrapper>
   )
