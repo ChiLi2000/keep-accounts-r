@@ -2,16 +2,23 @@ import React, {useState} from "react";
 import {generateOutput} from "./NumberPadSection/generateOutput";
 import {Wrapper} from "./NumberPadSection/Wrapper";
 
-
-const NumberPadSection: React.FC = () => {
-  const [output, _setOutput] = useState("0");
+type Props = {
+  value: number
+  onChange: (value: number) => void
+}
+const NumberPadSection: React.FC<Props> = (props) => {
+  const [output, _setOutput] = useState(props.value.toString());
   const setOutput = (output: string) => {
+    let newOutput:string
     if (output.length > 16) {
-      output = output.slice(0, 16);
+      newOutput = output.slice(0, 16);
     } else if (output.length === 0) {
-      output = "0";
+      newOutput = "0";
+    }else{
+      newOutput=output
     }
-    _setOutput(output);
+    _setOutput(newOutput)
+    props.onChange(parseFloat(newOutput));
   };
   const onClickButtonWrapper = (e: React.MouseEvent) => {
     const text = ((e.target as HTMLInputElement).textContent);

@@ -1,6 +1,7 @@
 import Icon from "components/Icon";
 import React, {useState} from "react";
 import styled from "styled-components";
+
 const Wrapper = styled.section`
   >ul{
    margin: 8px 0;
@@ -31,23 +32,28 @@ const Wrapper = styled.section`
 `;
 
 type Tag = {
-  id:number,
-  name:string,
-  value:string
+  id: number,
+  name: string,
+  value: string
 }
-const X=[
+const X = [
   {id: 1, name: "奖金", value: "奖金"},
   {id: 2, name: "宠物", value: "宠物"},
   {id: 3, name: "工资", value: "工资"},
   {id: 4, name: "红包", value: "红包"},
   {id: 5, name: "餐饮", value: "餐饮"}
-]
-const TagsSection: React.FC =()=>{
+];
+type Props = {
+  value: number,
+  onChange: (selected: number) => void
+}
+
+const TagsSection: React.FC<Props> = (props) => {
   const [tags] = useState<Tag[]>(X);
-  const [selectedTagId,setSelectedTagId] = useState(1)
+  const selectedTagId = props.value;
   const onToggleTag = (tagId: number) => {
     if (selectedTagId !== tagId) {
-      setSelectedTagId(tagId)
+      props.onChange(tagId);
     }
   };
   const getClass = (tagId: number) => selectedTagId === tagId ? "selected" : "";
@@ -59,7 +65,7 @@ const TagsSection: React.FC =()=>{
             <Icon name={tag.value}/>{tag.name}</li>)}
       </ul>
     </Wrapper>
-  )
-}
+  );
+};
 
-export {TagsSection}
+export {TagsSection};
