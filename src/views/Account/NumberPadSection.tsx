@@ -9,15 +9,15 @@ type Props = {
 const NumberPadSection: React.FC<Props> = (props) => {
   const [output, _setOutput] = useState(props.value.toString());
   const setOutput = (output: string) => {
-    let newOutput:string
+    let newOutput: string;
     if (output.length > 16) {
       newOutput = output.slice(0, 16);
     } else if (output.length === 0) {
       newOutput = "0";
-    }else{
-      newOutput=output
+    } else {
+      newOutput = output;
     }
-    _setOutput(newOutput)
+    _setOutput(newOutput);
     props.onChange(parseFloat(newOutput));
   };
   const onClickButtonWrapper = (e: React.MouseEvent) => {

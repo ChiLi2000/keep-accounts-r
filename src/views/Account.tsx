@@ -34,32 +34,27 @@ function Account() {
     amount: 0,
     createdAt: moment(new Date().toISOString()).format("YYYY-MM-DD HH:mm:ss")
   });
+  const onChange=(obj:Partial<typeof selected>)=>{
+    setSelected({...selected,...obj})
+  }
+
   return (
     <Outer>
-      {selected.category}
-      <hr/>
-      {selected.createdAt}
-      <hr/>
-      {selected.tagId}
-      <hr/>
-      {selected.note}
-      <hr/>
-      {selected.amount}
       <Topbar/>
       <CateAndTimeWrapper>
         <CategorySection value={selected.category}
-                         onChange={category => {setSelected({...selected, category: category});}}/>
+                         onChange={category => onChange({category})}/>
         <TimeSelector value={selected.createdAt}
-                      onChange={createdAt => {setSelected({...selected, createdAt: createdAt});}}/>
+                      onChange={createdAt => onChange({createdAt})}/>
       </CateAndTimeWrapper>
       <Center>
         <TagsSection value={selected.tagId}
-                     onChange={tagId => {setSelected({...selected, tagId: tagId});}}/>
+                     onChange={tagId => onChange({tagId})}/>
       </Center>
       <NotesSection value={selected.note}
-                    onChange={note => {setSelected({...selected, note: note});}}/>
+                    onChange={note => onChange({note})}/>
       <NumberPadSection value={selected.amount}
-                        onChange={amount => {setSelected({...selected, amount: amount});}}/>
+                        onChange={amount => onChange({amount})}/>
     </Outer>
   );
 }
