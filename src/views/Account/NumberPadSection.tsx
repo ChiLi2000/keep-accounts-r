@@ -1,69 +1,29 @@
-import styled from "styled-components";
-import React from "react";
+import React, {useState} from "react";
+import {generateOutput} from "./NumberPadSection/generateOutput";
+import {Wrapper} from "./NumberPadSection/Wrapper";
 
-const Wrapper = styled.section`
-  background: #f5f5f5;
-  display: flex;
-  flex-direction: column;
-  >.output{
-      box-shadow: inset 0 -3px 3px -3px rgba(0,0,0,.25), inset 0 3px 3px -3px rgba(0,0,0,.25);
-      font-size: 36px;
-      font-family: Consolas, monaspace, serif;
-      padding: 8px 14px;
-      text-align: right;
-  }
-  >.pad{
-      margin: 4px 14px;
-      >button{
-      width: 25%;
-      height: 56px;
-      float: left;
-      background: transparent;
-      border: none;
-      border-radius: 4px;
-      &.ok {
-        height: 112px;
-        float: right;
-      }
-      &.zero {
-        width: 50%;
-      }
-      &:nth-child(1) {
-        background: #f2f2f2;
-      }
-      &:nth-child(2),
-      &:nth-child(5) {
-        background: #e8e8e8;
-      }
-      &:nth-child(3),
-      &:nth-child(6),
-      &:nth-child(9) {
-        background: #dedede;
-      }
-      &:nth-child(4),
-      &:nth-child(7),
-      &:nth-child(10) {
-        background: #d3d3d3;
-      }
-      &:nth-child(8),
-      &:nth-child(11),
-      &:nth-child(13) {
-        background: #c9c9c9;
-      }
-      &:nth-child(14) {
-        background: #bfbfbf;
-      }
-      &:nth-child(12) {
-        background: #b5b5b5;
-      }
+
+const NumberPadSection: React.FC = () => {
+  const [output, _setOutput] = useState("0");
+  const setOutput = (output: string) => {
+    if (output.length > 16) {
+      output = output.slice(0, 16);
+    } else if (output.length === 0) {
+      output = "0";
     }
-  }
-`;
-const NumberPadSection =()=>{
-  return(
+    _setOutput(output);
+  };
+  const onClickButtonWrapper = (e: React.MouseEvent) => {
+    const text = ((e.target as HTMLInputElement).textContent);
+    if (text === null || text === "OK") {return;}
+    if ("0123456789.".split("").concat(["删除", "清空"]).indexOf(text) >= 0) {
+      setOutput(generateOutput(text, output));
+    }
+  };
+  return (
     <Wrapper>
-      <div className="output">100</div>
-      <div className="pad clearfix">
+      <div className="output">{output}</div>
+      <div className="pad clearfix" onClick={onClickButtonWrapper}>
         <button>1</button>
         <button>2</button>
         <button>3</button>
@@ -80,7 +40,7 @@ const NumberPadSection =()=>{
         <button>.</button>
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
-export {NumberPadSection}
+export {NumberPadSection};
