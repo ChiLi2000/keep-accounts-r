@@ -1,19 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 import {DatePicker} from "antd";
 import {ConfigProvider} from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
 import "moment/locale/zh-cn";
+import moment from "moment";
 
 const TimeSelector = () => {
+  const [value, setValue] = useState(moment(new Date().toISOString()).format("YYYY-MM-DD HH:mm:ss"));
   const onChange = (date: any, dateString: string) => {
     console.log(date, dateString);
+    setValue(moment(date._d).format("YYYY-MM-DD HH:mm:ss"));
   };
-  const style = {"width": "80px", "borderRadius": "25px", "padding": "8px 6px"};
+  const style = {"width": "110px", "borderRadius": "25px", "padding": "8px"};
   return (
     <ConfigProvider locale={zhCN}>
       <DatePicker onChange={onChange}
-                  picker="month"
+                  value={moment(value)}
                   style={style}
+                  allowClear={false}
       />
     </ConfigProvider>
   );
