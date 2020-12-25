@@ -2,6 +2,7 @@ import Icon from "components/Icon";
 import React from "react";
 import styled from "styled-components";
 import {useTags} from "hooks/useTags";
+import useLongPress from "../../lib/useLongPress";
 
 const Wrapper = styled.section`
   >ul{
@@ -46,13 +47,28 @@ const TagsSection: React.FC<Props> = (props) => {
       props.onChange(tagId);
     }
   };
-
   const getClass = (tagId: number) => selectedTagId === tagId ? "selected" : "";
+
+  const onLongPress = () => {
+    console.log('longpress is triggered');
+  };
+
+  const onClick = () => {
+    console.log('click is triggered')
+  }
+
+  const defaultOptions = {
+    shouldPreventDefault: true,
+    delay: 1000,
+  };
+  const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions)
+
   return (
     <Wrapper>
       <ul>
         {tags.map(tag =>
-          <li key={tag.id} onClick={() => {onToggleTag(tag.id);}} className={getClass(tag.id)}>
+          <li key={tag.id} onClick={() => {onToggleTag(tag.id);}} className={getClass(tag.id)}
+              {...longPressEvent}>
             <Icon name={tag.value}/>{tag.name}</li>)}
         <li onClick={addTag}><Icon name='add'/>添加</li>
       </ul>
