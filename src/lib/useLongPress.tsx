@@ -12,7 +12,6 @@ const useLongPress = (
   const start = useCallback(
     event => {
       if (shouldPreventDefault && event.target) {
-        // 监听触摸事件
         event.target.addEventListener("touchend", preventDefault, {
           passive: false
         });
@@ -56,8 +55,9 @@ const isTouchEvent = (event:any) => {
 const preventDefault = (event:any) => {
   if (!isTouchEvent(event)) return;
 
-  if (event.touches.length < 2 && event.preventDefault) {
-    event.preventDefault();
+  if ( event.preventDefault) {
+    // event.preventDefault();
   }
 };
-export default useLongPress
+
+export default useLongPress;
