@@ -41,7 +41,17 @@ const useTags = () => {
       }
     }
   };
-  return {tags, addTag};
+  const updateTag = (id: number, {name}: { name: string }) => {
+    tags.filter(t => t.name === name)[0]
+      ? alert("标签名重复")
+      : setTags(tags.map(tag => tag.id === id ? {id, name: name,value:'其它'} : tag));
+  };
+  const getName = (id: number) => {
+    const tag = tags.filter(t => t.id === id)[0];
+    return tag ? tag.name : "";
+  };
+
+  return {tags, addTag,updateTag,getName};
 };
 
 export {useTags}

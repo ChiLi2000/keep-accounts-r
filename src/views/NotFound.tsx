@@ -1,21 +1,30 @@
-import React from "react";
-import useLongPress from "../lib/useLongPress";
-
+import React, { useState } from 'react';
+import { Modal, Button } from 'antd';
 function NotFound() {
-  const onLongPress = () => {
-    console.log('longpress is triggered');
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const showModal = () => {
+    setIsModalVisible(true);
   };
 
-  const onClick = () => {
-    console.log('click is triggered')
-  }
-
-  const defaultOptions = {
-    shouldPreventDefault: true,
-    delay: 1000,
+  const handleOk = () => {
+    setIsModalVisible(false);
   };
-  const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions)
-  return <button {...longPressEvent}>测试长按指令</button>;
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+  return (
+    <div>
+      <Button type="primary" onClick={showModal}>
+        Open Modal
+      </Button>
+      <Modal title="Basic Modal" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+      </div>
+  );
 }
 
 export default NotFound

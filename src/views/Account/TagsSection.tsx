@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import styled from "styled-components";
 import {useTags} from "hooks/useTags";
 // import useLongPress from "lib/useLongPress";
@@ -65,15 +65,17 @@ type Props = {
 }
 
 const TagsSection: React.FC<Props> = (props) => {
-  const {tags, addTag} = useTags();
-
+  const {tags, addTag, getName, updateTag} = useTags();
   const selectedTagId = props.value;
+  const refInput = useRef<HTMLInputElement>(null);
+  const [x, setX] = useState(0);
   const onToggleTag = (tagId: number) => {
     if (selectedTagId !== tagId) {
       props.onChange(tagId);
     }
   };
   const getClass = (tagId: number) => selectedTagId === tagId ? "selected" : "";
+
   // 长按功能
   let longPressItemTimeOut: NodeJS.Timer | null = null;
   const onItemTouchStart = (tagId: number) => {
@@ -81,7 +83,10 @@ const TagsSection: React.FC<Props> = (props) => {
   };
   const onLongPressItem = (tagId: number) => {
     showModal();
-    console.log(tagId);
+    setX(tagId);
+    if (refInput.current !== null) {
+      refInput.current.value = getName(tagId);
+    }
   };
   const onItemTouchEnd = (tagId: number) => {
     clearTimeout(longPressItemTimeOut as NodeJS.Timeout);
@@ -95,6 +100,10 @@ const TagsSection: React.FC<Props> = (props) => {
 
   const handleOk = () => {
     setIsModalVisible(false);
+
+    if (refInput.current !== null) {
+      updateTag(x, {name: refInput.current.value});
+    }
   };
 
   const handleCancel = () => {
@@ -119,7 +128,7 @@ const TagsSection: React.FC<Props> = (props) => {
                <Button key="确定" type="primary" onClick={handleOk}>确定</Button>
              ]}>
         <LabelWrapper>
-          <input type="text"/>
+          <input type="text" ref={refInput}/>
           <p>2 / 10</p>
         </LabelWrapper>
       </Modal>
