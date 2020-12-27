@@ -82,10 +82,12 @@ const TagsSection: React.FC<Props> = (props) => {
     longPressItemTimeOut = setTimeout(() => onLongPressItem(tagId), 500);
   };
   const onLongPressItem = (tagId: number) => {
-    showModal();
-    setId(tagId);
-    if (refInput.current !== null) {
-      refInput.current.value = getName(tagId);
+    if (tagId > 5) {
+      showModal();
+      setId(tagId);
+      if (refInput.current !== null) {
+        refInput.current.value = getName(tagId);
+      }
     }
   };
   const onItemTouchEnd = (tagId: number) => {
