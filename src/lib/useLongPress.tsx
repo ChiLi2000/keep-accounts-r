@@ -1,63 +1,15 @@
-import { useCallback, useRef, useState } from "react";
+// 长按功能
 
-const useLongPress = (
-  onLongPress:Function,
-  onClick:Function,
-  { shouldPreventDefault = true, delay = 1000 } = {}
-) => {
-  const [longPressTriggered, setLongPressTriggered] = useState(false);
-  const timeout = useRef();
-  const target = useRef();
-
-  const start = useCallback(
-    event => {
-      if (shouldPreventDefault && event.target) {
-        event.target.addEventListener("touchend", preventDefault, {
-          passive: false
-        });
-        target.current = event.target;
-      }
-      // @ts-ignore
-      timeout.current = setTimeout(() => {
-        onLongPress(event);
-        setLongPressTriggered(true);
-      }, delay);
-    },
-    [onLongPress, delay, shouldPreventDefault]
-  );
-
-  const clear = useCallback(
-    (event, shouldTriggerClick = true) => {
-      timeout.current && clearTimeout(timeout.current);
-      shouldTriggerClick && !longPressTriggered && onClick();
-      setLongPressTriggered(false);
-      if (shouldPreventDefault && target.current) {
-        // @ts-ignore
-        target.current.removeEventListener("touchend", preventDefault);
-      }
-    },
-    [shouldPreventDefault, onClick, longPressTriggered]
-  );
-
-  return {
-    onMouseDown: (e:any) => start(e),
-    onTouchStart: (e:any) => start(e),
-    onMouseUp: (e:any) => clear(e),
-    onMouseLeave: (e:any) => clear(e, false),
-    onTouchEnd: (e:any) => clear(e)
-  };
+let longPressItemTimeOut: NodeJS.Timer | null = null;
+const onItemTouchStart = (fn: () => void) => {
+  longPressItemTimeOut = setTimeout(() => onLongPressItem(fn), 500);
+};
+const onLongPressItem = (fn: () => void) => {
+  fn();
+};
+const onItemTouchEnd = (fn: () => void) => {
+  clearTimeout(longPressItemTimeOut as NodeJS.Timeout);
+  fn();
 };
 
-const isTouchEvent = (event:any) => {
-  return "touches" in event;
-};
-
-const preventDefault = (event:any) => {
-  if (!isTouchEvent(event)) return;
-
-  if ( event.preventDefault) {
-    // event.preventDefault();
-  }
-};
-
-export default useLongPress;
+export {onItemTouchStart, onItemTouchEnd};

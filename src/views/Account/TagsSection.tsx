@@ -2,8 +2,8 @@ import Icon from "components/Icon";
 import React, {useRef, useState} from "react";
 import styled from "styled-components";
 import {useTags} from "hooks/useTags";
-// import useLongPress from "lib/useLongPress";
 import {Button, Modal} from "antd";
+import {onItemTouchEnd, onItemTouchStart} from "lib/useLongPress";
 
 const Wrapper = styled.section`
   >ul{
@@ -76,12 +76,7 @@ const TagsSection: React.FC<Props> = (props) => {
   };
   const getClass = (tagId: number) => selectedTagId === tagId ? "selected" : "";
 
-  // 长按功能
-  let longPressItemTimeOut: NodeJS.Timer | null = null;
-  const onItemTouchStart = (tagId: number) => {
-    longPressItemTimeOut = setTimeout(() => onLongPressItem(tagId), 500);
-  };
-  const onLongPressItem = (tagId: number) => {
+  const onLongPress = (tagId: number) => {
     if (tagId > 5) {
       showModal();
       setId(tagId);
@@ -89,10 +84,6 @@ const TagsSection: React.FC<Props> = (props) => {
         refInput.current.value = getName(tagId);
       }
     }
-  };
-  const onItemTouchEnd = (tagId: number) => {
-    clearTimeout(longPressItemTimeOut as NodeJS.Timeout);
-    onToggleTag(tagId);
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -122,7 +113,12 @@ const TagsSection: React.FC<Props> = (props) => {
         <ul>
           {tags.map(tag =>
             <li key={tag.id} className={getClass(tag.id)}
-                onTouchStart={() => onItemTouchStart(tag.id)} onTouchEnd={() => onItemTouchEnd(tag.id)}>
+                onTouchStart={() => {
+                  onItemTouchStart(() => onLongPress(tag.id));
+                }}
+                onTouchEnd={() => {
+                  onItemTouchEnd(() => onToggleTag(tag.id));
+                }}>
               <Icon name={tag.value}/>{tag.name}</li>)}
           <li onClick={addTag}><Icon name='add'/>添加</li>
         </ul>
