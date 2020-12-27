@@ -65,10 +65,10 @@ type Props = {
 }
 
 const TagsSection: React.FC<Props> = (props) => {
-  const {tags, addTag, getName, updateTag} = useTags();
+  const {tags, addTag, getName, updateTag, deleteTag} = useTags();
   const selectedTagId = props.value;
   const refInput = useRef<HTMLInputElement>(null);
-  const [x, setX] = useState(0);
+  const [id, setId] = useState(0);
   const onToggleTag = (tagId: number) => {
     if (selectedTagId !== tagId) {
       props.onChange(tagId);
@@ -83,7 +83,7 @@ const TagsSection: React.FC<Props> = (props) => {
   };
   const onLongPressItem = (tagId: number) => {
     showModal();
-    setX(tagId);
+    setId(tagId);
     if (refInput.current !== null) {
       refInput.current.value = getName(tagId);
     }
@@ -98,16 +98,20 @@ const TagsSection: React.FC<Props> = (props) => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
+  const handleCancel = () => {
     setIsModalVisible(false);
-
+  };
+  const updateTagId = () => {
+    handleCancel();
     if (refInput.current !== null) {
-      updateTag(x, {name: refInput.current.value});
+      updateTag(id, {name: refInput.current.value});
     }
   };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
+  const deleteTagId = () => {
+    handleCancel();
+    deleteTag(id);
+    window.alert("删除成功");
   };
 
   return (
@@ -121,11 +125,11 @@ const TagsSection: React.FC<Props> = (props) => {
           <li onClick={addTag}><Icon name='add'/>添加</li>
         </ul>
       </Wrapper>
-      <Modal title="请编辑类别名" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}
+      <Modal title="请编辑类别名" visible={isModalVisible}
              footer={[
-               <Button key="删除" onClick={handleOk}>删除</Button>,
+               <Button key="删除" onClick={deleteTagId}>删除</Button>,
                <Button key="取消" onClick={handleCancel}>取消</Button>,
-               <Button key="确定" type="primary" onClick={handleOk}>确定</Button>
+               <Button key="确定" type="primary" onClick={updateTagId}>确定</Button>
              ]}>
         <LabelWrapper>
           <input type="text" ref={refInput}/>
