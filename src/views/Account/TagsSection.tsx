@@ -1,63 +1,10 @@
 import Icon from "components/Icon";
 import React, {ChangeEventHandler, useState} from "react";
-import styled from "styled-components";
 import {useTags} from "hooks/useTags";
 import {Button, Modal} from "antd";
 import {onItemTouchEnd, onItemTouchStart} from "lib/useLongPress";
-
-const Wrapper = styled.section`
-  >ul{
-   margin: 8px 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  >li{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-size: 14px;
-    padding: 6px 0;
-    width: 25%;
-    .icon{
-      width: 32px;
-      height: 32px;
-      margin-bottom: 4px;
-    }
-    &.selected{
-      color:#e1c748;
-      .icon{
-      fill:#e1c748;
-      }
-    }
-  }
-}
-`;
-const LabelWrapper = styled.div`
-  >input{
-  background-color: #fff;
-    background-image: none;
-    border-radius: 4px;
-    border: 1px solid #dcdfe6;
-    box-sizing: border-box;
-    color: #606266;
-    display: inline-block;
-    font-size: inherit;
-    height: 40px;
-    line-height: 40px;
-    outline: 0;
-    padding: 0 15px;
-    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
-    width: 100%;
-  }
-  > p{
-    text-align: right;
-    font-size: 12px;
-    color: #999;
-    padding:11px 0 0 0;
-   
-  }
-`;
+import {Wrapper} from "./TagsSection/Wrapper";
+import {LabelWrapper} from "./TagsSection/LabelWrapper";
 
 type Props = {
   value: number,
@@ -130,7 +77,7 @@ const TagsSection: React.FC<Props> = (props) => {
              ]}>
         <LabelWrapper>
           <input type="text"  value={newName} onChange={onChange}/>
-          <p>{newName.length}/ 4</p>
+          <p>{newName.length} / 4</p>
         </LabelWrapper>
       </Modal>
     </>

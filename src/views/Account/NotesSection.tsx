@@ -30,18 +30,13 @@ type Props = {
 
 const NotesSection: React.FC<Props> = (props) => {
   const note = props.value;
-  const refInput = useRef<HTMLInputElement>(null);
-  const onBlur = () => {
-    if (refInput.current !== null) {
-      props.onChange(refInput.current.value);
-    }
-  };
+
   return (
     <Wrapper>
       <label>
         <input type="text" placeholder="请输入备注"
-               ref={refInput} defaultValue={note} onBlur={onBlur}/>
-        <span>2 / 10</span>
+               value={note} onChange={(e)=>props.onChange(e.target.value.substring(0, 10))}/>
+        <span>{note.length} / 10</span>
       </label>
     </Wrapper>
   );
