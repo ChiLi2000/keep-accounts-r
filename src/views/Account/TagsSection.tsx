@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import React, {useRef, useState} from "react";
+import React, {ChangeEventHandler, useState} from "react";
 import styled from "styled-components";
 import {useTags} from "hooks/useTags";
 import {Button, Modal} from "antd";
@@ -67,22 +67,23 @@ type Props = {
 const TagsSection: React.FC<Props> = (props) => {
   const {tags, addTag, getName, updateTag, deleteTag} = useTags();
   const selectedTagId = props.value;
-  const refInput = useRef<HTMLInputElement>(null);
   const [id, setId] = useState(0);
+  const [newName,setNewName] = useState("")
+
   const onToggleTag = (tagId: number) => {
     if (selectedTagId !== tagId) {
       props.onChange(tagId);
     }
   };
   const getClass = (tagId: number) => selectedTagId === tagId ? "selected" : "";
-
+  const onChange: ChangeEventHandler<HTMLInputElement> =(e)=>{
+    setNewName (e.target.value.substring(0, 4))
+  }
   const onLongPress = (tagId: number) => {
     if (tagId > 5) {
       showModal();
       setId(tagId);
-      if (refInput.current !== null) {
-        refInput.current.value = getName(tagId);
-      }
+      setNewName(getName(tagId));
     }
   };
 
@@ -96,9 +97,7 @@ const TagsSection: React.FC<Props> = (props) => {
   };
   const updateTagId = () => {
     handleCancel();
-    if (refInput.current !== null) {
-      updateTag(id, {name: refInput.current.value});
-    }
+    updateTag(id, {name:newName});
   };
 
   const deleteTagId = () => {
@@ -130,12 +129,12 @@ const TagsSection: React.FC<Props> = (props) => {
                <Button key="确定" type="primary" onClick={updateTagId}>确定</Button>
              ]}>
         <LabelWrapper>
-          <input type="text" ref={refInput}/>
-          <p>2 / 10</p>
+          <input type="text"  value={newName} onChange={onChange}/>
+          <p>{newName.length}/ 4</p>
         </LabelWrapper>
       </Modal>
     </>
-  );
-};
+  )
+}
 
 export {TagsSection};
