@@ -53,11 +53,16 @@ const TagsSection: React.FC<Props> = (props) => {
     handleCancel();
     deleteTag(id);
     window.alert("删除成功");
+    selectedTagFirst();
   };
   useEffect(() => {
     console.log("我点了");
-    type === "-" ? onToggleTag(1) : onToggleTag(18);
+    selectedTagFirst();
   }, [type]);
+
+  const selectedTagFirst = () => {
+    type === "-" ? onToggleTag(1) : onToggleTag(18);
+  };
   return (
     <>
       <Wrapper>
