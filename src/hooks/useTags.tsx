@@ -36,8 +36,8 @@ const useTags = () => {
         {id: createId(), genre: "+", name: "退款", value: "退款"},
         {id: createId(), genre: "+", name: "工资", value: "工资"},
         {id: createId(), genre: "+", name: "转账", value: "转账"},
-        {id: createId(), genre: "+", name: "其它", value: "其它"},
-        {id: createId(), genre: "+", name: "人情", value: "人情"}
+        {id: createId(), genre: "+", name: "人情", value: "人情"},
+        {id: createId(), genre: "+", name: "其它", value: "其它"}
       ];
     }
     setTags(localTags);

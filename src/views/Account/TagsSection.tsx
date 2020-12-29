@@ -29,11 +29,11 @@ const TagsSection: React.FC<Props> = (props) => {
     setNewName(e.target.value.substring(0, 4));
   };
   const onLongPress = (tagId: number) => {
-    // if (tagId > 5) {
+    if (tagId > 22) {
     showModal();
     setId(tagId);
     setNewName(getName(tagId));
-    // }
+    }
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -55,8 +55,8 @@ const TagsSection: React.FC<Props> = (props) => {
     window.alert("删除成功");
     selectedTagFirst();
   };
+
   useEffect(() => {
-    console.log("我点了");
     selectedTagFirst();
   }, [type]);
 
