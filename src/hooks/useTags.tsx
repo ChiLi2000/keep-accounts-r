@@ -47,10 +47,9 @@ const useTags = () => {
     window.localStorage.setItem("tagList", JSON.stringify(tags));
   }, tags);
 
-  const addTag = (genre:string) => {
-    console.log(genre)
+  const addTag = (genre: string) => {
     const tagName = window.prompt("新标签的名称为");
-    const tagNames = (tags.filter(t=>t.genre===genre)).map(t => t.name);
+    const tagNames = (tags.filter(t => t.genre === genre)).map(t => t.name);
     if (tagName !== null) {
       if (tagName === "") {
         alert("标签名不能为空");
@@ -61,17 +60,18 @@ const useTags = () => {
       }
     }
   };
-  const updateTag = (id: number, {name}: { name: string }) => {
-    tags.filter(t => t.name === name)[0]
+  const updateTag = (id: number, genre: string, {name}: { name: string }) => {
+    const newTags = tags.filter(t => t.genre === genre);
+    newTags.filter(t => t.name === name)[0]
       ? alert("标签名重复")
-      : setTags(tags.map(tag => tag.id === id ? {id, genre: "-", name: name, value: "其它"} : tag));
+      : setTags(tags.map(t => t.id === id ? {id, genre, name: name, value: "其它"} : t));
   };
   const getName = (id: number) => {
     const tag = tags.filter(t => t.id === id)[0];
     return tag ? tag.name : "";
   };
   const deleteTag = (id: number) => {
-    setTags(tags.filter(tag => tag.id !== id));
+    setTags(tags.filter(t => t.id !== id));
   };
 
   return {tags, addTag, updateTag, getName, deleteTag};

@@ -44,9 +44,9 @@ const TagsSection: React.FC<Props> = (props) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  const updateTagId = () => {
+  const updateTagId = (genre:string) => {
     handleCancel();
-    updateTag(id, {name:newName});
+    updateTag(id, genre,{name:newName});
   };
 
   const deleteTagId = () => {
@@ -75,7 +75,7 @@ const TagsSection: React.FC<Props> = (props) => {
              footer={[
                <Button key="删除" onClick={deleteTagId}>删除</Button>,
                <Button key="取消" onClick={handleCancel}>取消</Button>,
-               <Button key="确定" type="primary" onClick={updateTagId}>确定</Button>
+               <Button key="确定" type="primary" onClick={()=>updateTagId(type)}>确定</Button>
              ]}>
         <LabelWrapper>
           <input type="text"  value={newName} onChange={onChange}/>
