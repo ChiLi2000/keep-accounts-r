@@ -9,6 +9,7 @@ import {LabelWrapper} from "./TagsSection/LabelWrapper";
 type Props = {
   value: number,
   onChange: (selected: number) => void
+  type:string
 }
 
 const TagsSection: React.FC<Props> = (props) => {
@@ -16,6 +17,7 @@ const TagsSection: React.FC<Props> = (props) => {
   const selectedTagId = props.value;
   const [id, setId] = useState(0);
   const [newName,setNewName] = useState("")
+  const type = props.type
 
   const onToggleTag = (tagId: number) => {
     if (selectedTagId !== tagId) {
@@ -27,11 +29,11 @@ const TagsSection: React.FC<Props> = (props) => {
     setNewName (e.target.value.substring(0, 4))
   }
   const onLongPress = (tagId: number) => {
-    if (tagId > 5) {
+    // if (tagId > 5) {
       showModal();
       setId(tagId);
       setNewName(getName(tagId));
-    }
+    // }
   };
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -57,7 +59,7 @@ const TagsSection: React.FC<Props> = (props) => {
     <>
       <Wrapper>
         <ul>
-          {tags.map(tag =>
+          {(tags.filter(t=>t.genre===type)).map(tag =>
             <li key={tag.id} className={getClass(tag.id)}
                 onTouchStart={() => {
                   onItemTouchStart(() => onLongPress(tag.id));

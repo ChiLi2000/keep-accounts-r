@@ -56,7 +56,8 @@ function Account() {
       </CateAndTimeWrapper>
       <Center>
         <TagsSection value={selected.tagId}
-                     onChange={tagId => onChange({tagId})}/>
+                     onChange={tagId => onChange({tagId})}
+                      type={selected.category}/>
       </Center>
       <NotesSection value={selected.note}
                     onChange={note => onChange({note})}/>
