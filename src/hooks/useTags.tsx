@@ -47,16 +47,17 @@ const useTags = () => {
     window.localStorage.setItem("tagList", JSON.stringify(tags));
   }, tags);
 
-  const addTag = () => {
+  const addTag = (genre:string) => {
+    console.log(genre)
     const tagName = window.prompt("新标签的名称为");
-    const tagNames = tags.map(tag => tag.name);
+    const tagNames = (tags.filter(t=>t.genre===genre)).map(t => t.name);
     if (tagName !== null) {
       if (tagName === "") {
         alert("标签名不能为空");
       } else if (tagNames.indexOf(tagName) >= 0) {
         alert("标签名重复");
       } else {
-        setTags([...tags, {id: createId(), genre: "-", name: tagName, value: "其它"}]);
+        setTags([...tags, {id: createId(), genre, name: tagName, value: "其它"}]);
       }
     }
   };

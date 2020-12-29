@@ -68,7 +68,7 @@ const TagsSection: React.FC<Props> = (props) => {
                   onItemTouchEnd(() => onToggleTag(tag.id));
                 }}>
               <Icon name={tag.value}/>{tag.name}</li>)}
-          <li onClick={addTag}><Icon name='add'/>添加</li>
+          <li onClick={()=>addTag(type)}><Icon name='add'/>添加</li>
         </ul>
       </Wrapper>
       <Modal title="请编辑类别名" visible={isModalVisible}
