@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import React, {ChangeEventHandler, useState} from "react";
+import React, {ChangeEventHandler, useEffect, useState} from "react";
 import {useTags} from "hooks/useTags";
 import {Button, Modal} from "antd";
 import {onItemTouchEnd, onItemTouchStart} from "lib/useLongPress";
@@ -9,15 +9,15 @@ import {LabelWrapper} from "./TagsSection/LabelWrapper";
 type Props = {
   value: number,
   onChange: (selected: number) => void
-  type:string
+  type: string
 }
 
 const TagsSection: React.FC<Props> = (props) => {
   const {tags, addTag, getName, updateTag, deleteTag} = useTags();
   const selectedTagId = props.value;
   const [id, setId] = useState(0);
-  const [newName,setNewName] = useState("")
-  const type = props.type
+  const [newName, setNewName] = useState("");
+  const type = props.type;
 
   const onToggleTag = (tagId: number) => {
     if (selectedTagId !== tagId) {
@@ -25,14 +25,14 @@ const TagsSection: React.FC<Props> = (props) => {
     }
   };
   const getClass = (tagId: number) => selectedTagId === tagId ? "selected" : "";
-  const onChange: ChangeEventHandler<HTMLInputElement> =(e)=>{
-    setNewName (e.target.value.substring(0, 4))
-  }
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setNewName(e.target.value.substring(0, 4));
+  };
   const onLongPress = (tagId: number) => {
     // if (tagId > 5) {
-      showModal();
-      setId(tagId);
-      setNewName(getName(tagId));
+    showModal();
+    setId(tagId);
+    setNewName(getName(tagId));
     // }
   };
 
@@ -44,9 +44,9 @@ const TagsSection: React.FC<Props> = (props) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  const updateTagId = (genre:string) => {
+  const updateTagId = (genre: string) => {
     handleCancel();
-    updateTag(id, genre,{name:newName});
+    updateTag(id, genre, {name: newName});
   };
 
   const deleteTagId = () => {
@@ -54,12 +54,15 @@ const TagsSection: React.FC<Props> = (props) => {
     deleteTag(id);
     window.alert("删除成功");
   };
-
+  useEffect(() => {
+    console.log("我点了");
+    type === "-" ? onToggleTag(1) : onToggleTag(18);
+  }, [type]);
   return (
     <>
       <Wrapper>
         <ul>
-          {(tags.filter(t=>t.genre===type)).map(tag =>
+          {(tags.filter(t => t.genre === type)).map(tag =>
             <li key={tag.id} className={getClass(tag.id)}
                 onTouchStart={() => {
                   onItemTouchStart(() => onLongPress(tag.id));
@@ -68,22 +71,22 @@ const TagsSection: React.FC<Props> = (props) => {
                   onItemTouchEnd(() => onToggleTag(tag.id));
                 }}>
               <Icon name={tag.value}/>{tag.name}</li>)}
-          <li onClick={()=>addTag(type)}><Icon name='add'/>添加</li>
+          <li onClick={() => addTag(type)}><Icon name='add'/>添加</li>
         </ul>
       </Wrapper>
       <Modal title="请编辑类别名" visible={isModalVisible}
              footer={[
                <Button key="删除" onClick={deleteTagId}>删除</Button>,
                <Button key="取消" onClick={handleCancel}>取消</Button>,
-               <Button key="确定" type="primary" onClick={()=>updateTagId(type)}>确定</Button>
+               <Button key="确定" type="primary" onClick={() => updateTagId(type)}>确定</Button>
              ]}>
         <LabelWrapper>
-          <input type="text"  value={newName} onChange={onChange}/>
+          <input type="text" value={newName} onChange={onChange}/>
           <p>{newName.length} / 4</p>
         </LabelWrapper>
       </Modal>
     </>
-  )
-}
+  );
+};
 
 export {TagsSection};
