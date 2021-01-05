@@ -30,9 +30,9 @@ const TagsSection: React.FC<Props> = (props) => {
   };
   const onLongPress = (tagId: number) => {
     if (tagId > 22) {
-    showModal();
-    setId(tagId);
-    setNewName(getName(tagId));
+      showModal();
+      setId(tagId);
+      setNewName(getName(tagId));
     }
   };
 

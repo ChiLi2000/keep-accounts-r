@@ -48,13 +48,15 @@ const useTags = () => {
   }, tags);
 
   const addTag = (genre: string) => {
-    const tagName = window.prompt("新标签的名称为");
+    const tagName = window.prompt("请输入类别名", "类别名4字以内且不重复");
     const tagNames = (tags.filter(t => t.genre === genre)).map(t => t.name);
     if (tagName !== null) {
       if (tagName === "") {
-        alert("标签名不能为空");
+        alert("类别名不能为空");
       } else if (tagNames.indexOf(tagName) >= 0) {
-        alert("标签名重复");
+        alert("类别名重复了");
+      } else if (tagName.length > 4) {
+        alert("类别名超长了");
       } else {
         setTags([...tags, {id: createId(), genre, name: tagName, value: "其它"}]);
       }
