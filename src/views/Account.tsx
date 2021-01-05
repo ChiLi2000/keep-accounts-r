@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import {CategorySection} from "./Account/CategorySection";
-import {TimeSelector} from "./Account/TimeSelector";
+import {TimeSelector} from "components/TimeSelector";
 import {NumberPadSection} from "./Account/NumberPadSection";
 import {Topbar} from "./Account/Torbar";
 import {TagsSection} from "./Account/TagsSection";
@@ -44,6 +44,7 @@ function Account() {
     addRecord(selected);
     setSelected(defaultFormDate);
   };
+  const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px"};
 
   return (
     <Outer>
@@ -52,7 +53,8 @@ function Account() {
         <CategorySection value={selected.category}
                          onChange={category => onChange({category})}/>
         <TimeSelector value={selected.createdAt}
-                      onChange={createdAt => onChange({createdAt})}/>
+                      onChange={createdAt => onChange({createdAt})}
+                      style ={styleTime}/>
       </CateAndTimeWrapper>
       <Center>
         <TagsSection value={selected.tagId}

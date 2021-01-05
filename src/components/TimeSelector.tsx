@@ -1,30 +1,38 @@
-import React, {useState} from "react";
+import React from "react";
 import {DatePicker} from "antd";
 import {ConfigProvider} from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
-import "moment/locale/zh-cn";
 import moment from "moment";
+import "moment/locale/zh-cn";
+
 
 type Props = {
   value: string
+  type?: "month"
   onChange: (value: string) => void
+  style: any
 }
+
 const TimeSelector: React.FC<Props> = (props) => {
+  const type = props.type;
   const value = props.value;
+  const style = props.style;
   const onChange = (date: any, dateString: string) => {
-    console.log(date, dateString);
-    props.onChange(moment(date._d).format("YYYY-MM-DD HH:mm:ss"));
+    if (props.type !== undefined) {
+      props.onChange(dateString);
+    } else {
+      props.onChange(moment(date._d).format("YYYY-MM-DD HH:mm:ss"));
+    }
   };
-  const style = {"width": "110px", "borderRadius": "25px", "padding": "8px"};
   return (
     <ConfigProvider locale={zhCN}>
       <DatePicker onChange={onChange}
                   value={moment(value)}
-                  style={style}
                   allowClear={false}
+                  picker={type}
+                  style={style}
       />
     </ConfigProvider>
   );
 };
-
 export {TimeSelector};
