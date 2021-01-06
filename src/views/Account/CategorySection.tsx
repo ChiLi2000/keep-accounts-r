@@ -4,7 +4,8 @@ import {Category} from "../Account";
 type Props = {
   value: Category
   onChange: (value: Category) => void
-  className?: string;
+  className?: string
+  slot?:Category
 }
 
 const CategorySection: React.FC<Props> = (props) => {
@@ -19,6 +20,7 @@ const CategorySection: React.FC<Props> = (props) => {
           <li key={c} className={category === c ? "selected" : ""}
               onClick={() => {props.onChange(c);}}>
             {categoryMap[c]}
+            {props.slot && <span>0</span>}
           </li>)}
       </ul>
     </div>

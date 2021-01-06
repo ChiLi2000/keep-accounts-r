@@ -15,6 +15,7 @@ const MyCategorySection = styled(CategorySection)`
     display: flex;
     justify-content: space-between;
     text-align: center;
+    margin:0;
     > li {
       width: 50%;
       padding: 6px 16px;
