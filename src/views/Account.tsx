@@ -7,7 +7,7 @@ import {Topbar} from "./Account/Torbar";
 import {TagsSection} from "./Account/TagsSection";
 import {NotesSection} from "./Account/NotesSection";
 import moment from "moment";
-import {useRecords} from "../hooks/useRecords";
+import {useRecords} from "hooks/useRecords";
 
 const Outer = styled.div`
   display: flex;
@@ -23,6 +23,7 @@ const CateAndTimeWrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: #ffff;
 `;
 const MyCategorySection = styled(CategorySection)`
   width: 60%;

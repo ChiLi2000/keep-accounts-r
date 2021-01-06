@@ -1,31 +1,9 @@
 import React, {useState} from "react";
-import Layout from "components/Layout";
-import styled from "styled-components";
-import {CategorySection} from "./Account/CategorySection";
 import moment from "moment";
 import {TimeSelector} from "components/TimeSelector";
-
-const TimeWrapper = styled.div`
-  max-width: 100%;
-  text-align: center;
-  padding: 10px 14px;
-`;
-const MyCategorySection = styled(CategorySection)`
-  > ul{
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    margin:0;
-    > li {
-      width: 50%;
-      padding: 6px 16px;
-      margin: 0 14px; 
-        &.selected{
-          border-bottom:2px solid gray;
-        }
-    }  
-  }
-`;
+import {TimeWrapper} from "components/TimeWrapper";
+import {MyCategorySection} from "components/MyCategorySection";
+import Layout from "components/Layout";
 
 function Statistics() {
   const [x, setX] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
