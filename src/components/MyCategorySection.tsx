@@ -18,7 +18,7 @@ const MyCategorySection = styled(CategorySection)`
           border-bottom:2px solid gray;
         }
         >span{
-          padding: 16px 16px 10px 16px;
+          padding: 16px 16px 0 16px;
           font-size: 28px;
           font-weight: 600
        }
