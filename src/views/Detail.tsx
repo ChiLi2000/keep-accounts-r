@@ -3,11 +3,27 @@ import Layout from "components/Layout";
 import moment from "moment";
 import styled from "styled-components";
 import {TimeSelector} from "components/TimeSelector";
+import {CategorySection} from "./Account/CategorySection";
 
 const TimeWrapper = styled.div`
   max-width: 100%;
   text-align: center;
   padding: 10px 14px;
+`;
+const MyCategorySection = styled(CategorySection)`
+  > ul{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    > li {
+      width: 50%;
+      padding: 6px 16px;
+      margin: 0 14px; 
+        &.selected{
+          border-bottom:2px solid gray;
+        }
+    }  
+  }
 `;
 
 function Detail() {
@@ -21,7 +37,8 @@ function Detail() {
                       type="month"
                       style={styleTime}/>
       </TimeWrapper>
-      <div>type</div>
+      <MyCategorySection value='-'
+                         onChange={() => {}}/>
       <div>record</div>
     </Layout>
   );

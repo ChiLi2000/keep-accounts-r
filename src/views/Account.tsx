@@ -24,7 +24,24 @@ const CateAndTimeWrapper = styled.section`
   align-items: center;
   justify-content: space-between;
 `;
-
+const MyCategorySection = styled(CategorySection)`
+  width: 60%;
+  > ul{
+     margin:0 auto;
+     display:flex;
+    > li {
+      margin-right: 32px;
+      border-radius: 25px;
+      text-align:center;
+      padding: 4px 16px;
+      background-color: #f2f2f2;
+      &.selected{
+        border:1px solid #e1c748;
+        color:#e1c748;
+      }
+    }
+  }
+`;
 export type Category = "-" | "+"
 const defaultFormDate = {
   category: "-" as Category,
@@ -50,16 +67,16 @@ function Account() {
     <Outer>
       <Topbar/>
       <CateAndTimeWrapper>
-        <CategorySection value={selected.category}
-                         onChange={category => onChange({category})}/>
+        <MyCategorySection value={selected.category}
+                           onChange={category => onChange({category})}/>
         <TimeSelector value={selected.createdAt}
                       onChange={createdAt => onChange({createdAt})}
-                      style ={styleTime}/>
+                      style={styleTime}/>
       </CateAndTimeWrapper>
       <Center>
         <TagsSection value={selected.tagId}
                      onChange={tagId => onChange({tagId})}
-                      type={selected.category}/>
+                     type={selected.category}/>
       </Center>
       <NotesSection value={selected.note}
                     onChange={note => onChange({note})}/>

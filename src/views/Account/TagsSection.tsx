@@ -58,6 +58,7 @@ const TagsSection: React.FC<Props> = (props) => {
 
   useEffect(() => {
     selectedTagFirst();
+    // eslint-disable-next-line
   }, [type]);
 
   const selectedTagFirst = () => {
