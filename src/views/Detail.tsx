@@ -6,8 +6,9 @@ import {TimeWrapper} from "components/TimeWrapper";
 import {MyCategorySection} from "components/MyCategorySection";
 import styled from "styled-components";
 import Icon from "components/Icon";
-import {RecordItem, useRecords} from "../hooks/useRecords";
-import {useTags} from "../hooks/useTags";
+import {RecordItem, useRecords} from "hooks/useRecords";
+import {useTags} from "hooks/useTags";
+import {Category} from "./Account";
 
 const RecordItemWrapper = styled.div`
   background: #ffff;
@@ -59,6 +60,12 @@ function Detail() {
     if (a[0] < b[0]) return 1;
     return 0;
   });
+  const Total = (records: RecordItem[], type: Category) => {
+    return records.filter(r => r.category === type)
+      .reduce((sum, item) => {
+        return sum + item.amount;
+      }, 0);
+  };
   const [x, setX] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
   const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px 16px"};
 
@@ -74,7 +81,7 @@ function Detail() {
       {array.map(([date, records]) => <div key={date}>
         <Header>
           {date}
-          <RightContent> 支出：￥3.00 收入：￥0.00 </RightContent>
+          <RightContent> 支出： {Total(records, "-")} 收入： {Total(records, "+")} </RightContent>
         </Header>
         {records.map(r => {
           return <RecordItemWrapper key={r.idR}>
