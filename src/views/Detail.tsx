@@ -68,6 +68,13 @@ function Detail() {
   };
   const [x, setX] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
   const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px 16px"};
+  const MouthTotal = (type: Category) => {
+    return records.filter(r => (r.createdAt).indexOf(x) !== -1)
+      .filter(r => r.category === type)
+      .reduce((sum, item) => {
+        return sum + item.amount;
+      }, 0);
+  };
 
   return (
     <Layout>
@@ -77,7 +84,7 @@ function Detail() {
                       type="month"
                       style={styleTime}/>
       </TimeWrapper>
-      <MyCategorySection slot='-'/>
+      <MyCategorySection slot={(type) => MouthTotal(type)}/>
       {array.map(([date, records]) => <div key={date}>
         <Header>
           {date}

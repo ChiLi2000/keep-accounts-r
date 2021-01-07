@@ -5,7 +5,7 @@ type Props = {
   value?: Category
   onChange?: (value: Category) => void
   className?: string
-  slot?: Category
+  slot?: (type: Category) => number
 }
 
 const CategorySection: React.FC<Props> = (props) => {
@@ -13,6 +13,7 @@ const CategorySection: React.FC<Props> = (props) => {
   type Keys = keyof typeof categoryMap    //'-','+'
   const [categoryList] = useState<Keys[]>(["-", "+"]);
   const category = props.value;
+
   return (
     <div className={props.className}>
       <ul>
@@ -20,7 +21,7 @@ const CategorySection: React.FC<Props> = (props) => {
           <li key={c} className={category === c ? "selected" : ""}
               onClick={() => {if (props.onChange) props.onChange(c);}}>
             {categoryMap[c]}
-            {props.slot && <span>0</span>}
+            {props.slot && <span>￥{props.slot(c)}</span>}
           </li>)}
       </ul>
     </div>
