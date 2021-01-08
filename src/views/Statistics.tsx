@@ -8,6 +8,7 @@ import Icon from "../components/Icon";
 import styled from "styled-components";
 import {RecordItem, useRecords} from "../hooks/useRecords";
 import {useTags} from "../hooks/useTags";
+import {Category} from "./Account";
 
 const RecordItemWrapper = styled.div`
   background: #ffff;
@@ -58,14 +59,14 @@ function Statistics() {
   });
   const array = Object.entries(hash);
   const newRecords = (records: RecordItem[]) => {
-    return records.sort((a, b) => b.amount - a.amount);
+    return records.filter(r => r.category === y).sort((a, b) => b.amount - a.amount);
   };
   const MouthRecord = () => {
     return array.filter(r => moment(x).format("YYYY年MM月") === r[0]);
   };
   const [x, setX] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
   const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px 16px"};
-
+  const [y, setY] = useState<Category>("-");
   return (
     <Layout>
       <TimeWrapper>
@@ -74,8 +75,8 @@ function Statistics() {
                       type="month"
                       style={styleTime}/>
       </TimeWrapper>
-      <MyCategorySection value='-'
-                         onChange={() => {}}/>
+      <MyCategorySection value={y}
+                         onChange={(typeValue) => setY(typeValue)}/>
       {MouthRecord().map(([date, records]) => <div key={date}>
         <Header>
           {date}排行榜
