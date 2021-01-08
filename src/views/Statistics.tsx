@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import moment from "moment";
-import {TimeSelector} from "components/TimeSelector";
 import {TimeWrapper} from "components/TimeWrapper";
 import {MyCategorySection} from "components/MyCategorySection";
 import Layout from "components/Layout";
@@ -47,6 +46,7 @@ type HashType = {
 }
 
 function Statistics() {
+  const [createTime, setCreateTime] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
   const {records} = useRecords();
   const {getName} = useTags();
   const hash: HashType = {};//  {'2020-05-11': [item, item], '2020-05-10': [item, item], '2020-05-12': [item, item, item, item]}
@@ -62,19 +62,13 @@ function Statistics() {
     return records.filter(r => r.category === y).sort((a, b) => b.amount - a.amount);
   };
   const MouthRecord = () => {
-    return array.filter(r => moment(x).format("YYYY年MM月") === r[0]);
+    return array.filter(r => moment(createTime).format("YYYY年MM月") === r[0]);
   };
-  const [x, setX] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
-  const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px 16px"};
+
   const [y, setY] = useState<Category>("-");
   return (
     <Layout>
-      <TimeWrapper>
-        <TimeSelector value={x}
-                      onChange={(monthValue) => setX(monthValue)}
-                      type="month"
-                      style={styleTime}/>
-      </TimeWrapper>
+      <TimeWrapper value={createTime} onChange={(monthValue) => setCreateTime(monthValue)}/>
       <MyCategorySection value={y}
                          onChange={(typeValue) => setY(typeValue)}/>
       {MouthRecord().map(([date, records]) => <div key={date}>

@@ -5,7 +5,6 @@ import zhCN from "antd/lib/locale/zh_CN";
 import moment from "moment";
 import "moment/locale/zh-cn";
 
-
 type Props = {
   value: string
   type?: "month"

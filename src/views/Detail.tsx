@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import Layout from "components/Layout";
 import moment from "moment";
-import {TimeSelector} from "components/TimeSelector";
 import {TimeWrapper} from "components/TimeWrapper";
 import {MyCategorySection} from "components/MyCategorySection";
 import styled from "styled-components";
@@ -48,6 +47,7 @@ type HashType = {
 }
 
 function Detail() {
+  const [createTime, setCreateTime] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
   const {records} = useRecords();
   const {getName} = useTags();
   const hash: HashType = {};//  {'2020-05-11': [item, item], '2020-05-10': [item, item], '2020-05-12': [item, item, item, item]}
@@ -63,10 +63,10 @@ function Detail() {
     if (a[0] > b[0]) return -1;
     if (a[0] < b[0]) return 1;
     return 0;
-  })
-  const newRecords = (records:RecordItem[])=>{
-     return records.sort((a,b)=> moment(b.createdAt).valueOf()-moment(a.createdAt).valueOf())
-  }
+  });
+  const newRecords = (records: RecordItem[]) => {
+    return records.sort((a, b) => moment(b.createdAt).valueOf() - moment(a.createdAt).valueOf());
+  };
 
   const Total = (records: RecordItem[], type: Category) => {
     return records.filter(r => r.category === type)
@@ -74,23 +74,18 @@ function Detail() {
         return sum + item.amount;
       }, 0);
   };
-  const [createTime, setCreateTime] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
-  const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px 16px"};
+
   const MouthTotal = (type: Category) => {
-    return Total(records.filter(r => (r.createdAt).indexOf(createTime) !== -1),type)
+    return Total(records.filter(r => (r.createdAt).indexOf(createTime) !== -1), type);
   };
   const MouthRecord = () => {
     return array.filter(r => createTime.slice(5) === r[0].slice(0, 2));
   };
 
+
   return (
     <Layout>
-      <TimeWrapper>
-        <TimeSelector value={createTime}
-                      onChange={(monthValue) => setCreateTime(monthValue)}
-                      type="month"
-                      style={styleTime}/>
-      </TimeWrapper>
+      <TimeWrapper value={createTime} onChange={(monthValue) => setCreateTime(monthValue)}/>
       <MyCategorySection slot={(type) => MouthTotal(type)}/>
       {MouthRecord().map(([date, records]) => <div key={date}>
         <Header>
