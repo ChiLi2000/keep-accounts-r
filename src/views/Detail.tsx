@@ -43,10 +43,14 @@ const RightContent = styled.span`
    font-size: 14px;
 `;
 
+type HashType = {
+  [key: string]: RecordItem[]
+}
+
 function Detail() {
   const {records} = useRecords();
   const {getName} = useTags();
-  const hash: { [key: string]: RecordItem[] } = {};//  {'2020-05-11': [item, item], '2020-05-10': [item, item], '2020-05-12': [item, item, item, item]}
+  const hash: HashType = {};//  {'2020-05-11': [item, item], '2020-05-10': [item, item], '2020-05-12': [item, item, item, item]}
   records.forEach(r => {
     const key = moment(r.createdAt).format("MM月DD日");
     if (!(key in hash)) {
@@ -66,26 +70,29 @@ function Detail() {
         return sum + item.amount;
       }, 0);
   };
-  const [x, setX] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
+  const [createTime, setCreateTime] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
   const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px 16px"};
   const MouthTotal = (type: Category) => {
-    return records.filter(r => (r.createdAt).indexOf(x) !== -1)
+    return records.filter(r => (r.createdAt).indexOf(createTime) !== -1)
       .filter(r => r.category === type)
       .reduce((sum, item) => {
         return sum + item.amount;
       }, 0);
   };
 
+  const MouthRecord = () => {
+    return array.filter(r => createTime.slice(5) === r[0].slice(0, 2));
+  };
   return (
     <Layout>
       <TimeWrapper>
-        <TimeSelector value={x}
-                      onChange={(monthValue) => setX(monthValue)}
+        <TimeSelector value={createTime}
+                      onChange={(monthValue) => setCreateTime(monthValue)}
                       type="month"
                       style={styleTime}/>
       </TimeWrapper>
       <MyCategorySection slot={(type) => MouthTotal(type)}/>
-      {array.map(([date, records]) => <div key={date}>
+      {MouthRecord().map(([date, records]) => <div key={date}>
         <Header>
           {date}
           <RightContent> 支出： {Total(records, "-")} 收入： {Total(records, "+")} </RightContent>
@@ -98,7 +105,7 @@ function Detail() {
           </RecordItemWrapper>;
         })}
       </div>)}
-
+      {MouthRecord().length === 0 ? <div className="cue">当月没有任何记录哦</div> : ""}
     </Layout>
   );
 }
