@@ -3,11 +3,12 @@ import moment from "moment";
 import {TimeWrapper} from "components/TimeWrapper";
 import {MyCategorySection} from "components/MyCategorySection";
 import Layout from "components/Layout";
-import Icon from "../components/Icon";
-import {RecordItem, useRecords} from "../hooks/useRecords";
-import {useTags} from "../hooks/useTags";
+import Icon from "components/Icon";
+import {RecordItem, useRecords} from "hooks/useRecords";
+import {useTags} from "hooks/useTags";
 import {Category} from "./Account";
 import {Header, RecordItemWrapper, RightContent} from "components/RecordsList";
+import ChartLine from "components/ChartLine";
 
 
 type HashType = {
@@ -41,6 +42,7 @@ function Statistics() {
                    onChange={(monthValue) => setCreateTime(monthValue)}/>
       <MyCategorySection value={y}
                          onChange={(typeValue) => setY(typeValue)}/>
+      <ChartLine/>
       {MouthRecord().map(([date, records]) => <div key={date}>
         <Header>
           {date}排行榜
