@@ -4,43 +4,12 @@ import {TimeWrapper} from "components/TimeWrapper";
 import {MyCategorySection} from "components/MyCategorySection";
 import Layout from "components/Layout";
 import Icon from "../components/Icon";
-import styled from "styled-components";
 import {RecordItem, useRecords} from "../hooks/useRecords";
 import {useTags} from "../hooks/useTags";
 import {Category} from "./Account";
+import {Header, RecordItemWrapper, RightContent} from "components/RecordsList";
 
-const RecordItemWrapper = styled.div`
-  background: #ffff;
-  display: grid;
-  grid: auto auto / 38px 1fr;
-  padding:8px 14px;
-    >svg{
-      width: 38px;
-      height: 38px;
-      grid-column: 1;
-      grid-row: 1 / span 2; 
-      margin-top: 2px;
-    }
-    >p{
-      margin:0;
-      padding: 2px 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-`;
-const Header = styled.h3`
-  margin:0;
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-  text-align: center;
-  line-height: 24px;
-  padding: 12px 14px;
-`;
-const RightContent = styled.span`
-   font-size: 14px;
-`;
+
 type HashType = {
   [key: string]: RecordItem[]
 }
@@ -68,7 +37,8 @@ function Statistics() {
   const [y, setY] = useState<Category>("-");
   return (
     <Layout>
-      <TimeWrapper value={createTime} onChange={(monthValue) => setCreateTime(monthValue)}/>
+      <TimeWrapper value={createTime}
+                   onChange={(monthValue) => setCreateTime(monthValue)}/>
       <MyCategorySection value={y}
                          onChange={(typeValue) => setY(typeValue)}/>
       {MouthRecord().map(([date, records]) => <div key={date}>
