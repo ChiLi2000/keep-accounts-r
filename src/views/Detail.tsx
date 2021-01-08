@@ -63,7 +63,11 @@ function Detail() {
     if (a[0] > b[0]) return -1;
     if (a[0] < b[0]) return 1;
     return 0;
-  });
+  })
+  const newRecords = (records:RecordItem[])=>{
+     return records.sort((a,b)=> moment(b.createdAt).valueOf()-moment(a.createdAt).valueOf())
+  }
+
   const Total = (records: RecordItem[], type: Category) => {
     return records.filter(r => r.category === type)
       .reduce((sum, item) => {
@@ -73,16 +77,12 @@ function Detail() {
   const [createTime, setCreateTime] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
   const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px 16px"};
   const MouthTotal = (type: Category) => {
-    return records.filter(r => (r.createdAt).indexOf(createTime) !== -1)
-      .filter(r => r.category === type)
-      .reduce((sum, item) => {
-        return sum + item.amount;
-      }, 0);
+    return Total(records.filter(r => (r.createdAt).indexOf(createTime) !== -1),type)
   };
-
   const MouthRecord = () => {
     return array.filter(r => createTime.slice(5) === r[0].slice(0, 2));
   };
+
   return (
     <Layout>
       <TimeWrapper>
@@ -97,7 +97,7 @@ function Detail() {
           {date}
           <RightContent> 支出： {Total(records, "-")} 收入： {Total(records, "+")} </RightContent>
         </Header>
-        {records.map(r => {
+        {newRecords(records).map(r => {
           return <RecordItemWrapper key={r.idR}>
             <Icon name={getName(r.tagId)}/>
             <p className="topItem">{getName(r.tagId)}<span>{r.category === "-" ? (-r.amount) : (+r.amount)}</span></p>
