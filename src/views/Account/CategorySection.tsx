@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Category} from "../Account";
+import {numberFilter} from "lib/numberFilter";
 
 type Props = {
   value?: Category
@@ -21,7 +22,7 @@ const CategorySection: React.FC<Props> = (props) => {
           <li key={c} className={category === c ? "selected" : ""}
               onClick={() => {if (props.onChange) props.onChange(c);}}>
             {categoryMap[c]}
-            {props.slot && <span>￥{props.slot(c)}</span>}
+            {props.slot && <span>￥{numberFilter(props.slot(c))}</span>}
           </li>)}
       </ul>
     </div>

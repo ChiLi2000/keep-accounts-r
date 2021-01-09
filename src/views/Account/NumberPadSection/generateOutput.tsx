@@ -10,7 +10,9 @@ const generateOutput = (text: string, output = "0") => {
     case "7":
     case "8":
     case "9":
-      if (output === "0") {return text;} else {return output + text;}
+      if (output === "0") {return text;}
+      else if(output[output.length-3]==='.'){return output}
+      else{return output + text;}
     case ".":
       if (output.indexOf(".") >= 0) {return output;}
       return output + ".";

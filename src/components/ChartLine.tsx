@@ -3,6 +3,7 @@ import "echarts/lib/chart/line";
 import "echarts/lib/component/tooltip";
 import {RecordItem} from "hooks/useRecords";
 import moment from "moment";
+import {numberFilter} from "lib/numberFilter";
 
 const echarts = require("echarts");
 type Props = {
@@ -66,7 +67,6 @@ const ChartLine: React.FC<Props> = (props) => {
     changeData()
     const chart = echarts.init(document.getElementById("chartLine") as HTMLElement);
     chart.setOption(options);
-    console.log('加载了')
   }, [ options]);
   const changeData = () => {
     for (let i = 0; i < value.length - 1; i++) {
@@ -83,7 +83,7 @@ const ChartLine: React.FC<Props> = (props) => {
         if(i===moment(value[j].createdAt).date()){
           t++;
           options.xAxis.data.push(i+'日')
-          options.series[0].data.push(parseFloat(value[j].amount.toString()))
+          options.series[0].data.push(numberFilter(value[j].amount))
           break
         }
       }

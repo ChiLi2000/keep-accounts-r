@@ -9,6 +9,7 @@ import {useTags} from "hooks/useTags";
 import {Category} from "./Account";
 import {Header, RecordItemWrapper, RightContent} from "components/RecordsList";
 import ChartLine from "components/ChartLine";
+import {numberFilter} from "lib/numberFilter";
 
 type HashType = {
   [key: string]: RecordItem[]
@@ -53,7 +54,7 @@ function Statistics() {
         {newRecords(records).map(r => {
           return <RecordItemWrapper key={r.idR}>
             <Icon name={getName(r.tagId)}/>
-            <p className="topItem">{getName(r.tagId)}<span>{r.category === "-" ? (-r.amount) : (+r.amount)}</span></p>
+            <p className="topItem">{getName(r.tagId)}<span>{r.category+numberFilter(r.amount)}</span></p>
             <p className="bottomItem">{r.note}<span>{moment(r.createdAt).format("MM月DD日 LTS")}</span></p>
           </RecordItemWrapper>;
         })}

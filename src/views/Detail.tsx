@@ -8,6 +8,7 @@ import {RecordItem, useRecords} from "hooks/useRecords";
 import {useTags} from "hooks/useTags";
 import {Category} from "./Account";
 import {Header, RecordItemWrapper, RightContent} from "components/RecordsList";
+import {numberFilter} from "lib/numberFilter";
 
 type HashType = {
   [key: string]: RecordItem[]
@@ -57,12 +58,12 @@ function Detail() {
       {MouthRecord().map(([date, records]) => <div key={date}>
         <Header>
           {date}
-          <RightContent> 支出： {Total(records, "-")} 收入： {Total(records, "+")} </RightContent>
+          <RightContent> 支出： {numberFilter(Total(records, "-"))} 收入： {numberFilter(Total(records, "+"))} </RightContent>
         </Header>
         {newRecords(records).map(r => {
           return <RecordItemWrapper key={r.idR}>
             <Icon name={getName(r.tagId)}/>
-            <p className="topItem">{getName(r.tagId)}<span>{r.category === "-" ? (-r.amount) : (+r.amount)}</span></p>
+            <p className="topItem">{getName(r.tagId)}<span>{r.category + numberFilter(r.amount)}</span></p>
             <p className="bottomItem">{r.note}<span>{(r.createdAt).slice(11)}</span></p>
           </RecordItemWrapper>;
         })}
