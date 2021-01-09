@@ -10,7 +10,6 @@ import {Category} from "./Account";
 import {Header, RecordItemWrapper, RightContent} from "components/RecordsList";
 import ChartLine from "components/ChartLine";
 
-
 type HashType = {
   [key: string]: RecordItem[]
 }
@@ -19,7 +18,7 @@ function Statistics() {
   const [createTime, setCreateTime] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
   const {records} = useRecords();
   const {getName} = useTags();
-  const hash: HashType = {};//  {'2020-05-11': [item, item], '2020-05-10': [item, item], '2020-05-12': [item, item, item, item]}
+  const hash: HashType = {};//  {'2020-05': [item, item], '2020-06': [item, item]}
   records.forEach(r => {
     const key = moment(r.createdAt).format("YYYY年MM月");
     if (!(key in hash)) {
@@ -36,13 +35,16 @@ function Statistics() {
   };
 
   const [y, setY] = useState<Category>("-");
+
   return (
     <Layout>
       <TimeWrapper value={createTime}
                    onChange={(monthValue) => setCreateTime(monthValue)}/>
       <MyCategorySection value={y}
                          onChange={(typeValue) => setY(typeValue)}/>
-      <ChartLine/>
+      {((MouthRecord().length !== 0) && (newRecords(((MouthRecord()[0])[1]))).length !== 0)
+        ? <ChartLine axis={moment(createTime).daysInMonth()} value={newRecords((MouthRecord()[0])[1])}/>
+        : <div className="cue">当月没有任何记录哦</div>}
       {MouthRecord().map(([date, records]) => <div key={date}>
         <Header>
           {date}排行榜
