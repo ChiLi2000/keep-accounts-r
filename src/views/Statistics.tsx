@@ -8,7 +8,17 @@ import {Category} from "./Account";
 import {Header, RecordItemWrapper, RightContent} from "components/RecordsList";
 import ChartLine from "components/ChartLine";
 import {numberFilter} from "lib/numberFilter";
+import styled from "styled-components";
 
+const CenterOuter = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const CenterTop = styled.div`
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+`;
 type HashType = {
   [key: string]: RecordItem[]
 }
@@ -40,22 +50,27 @@ function Statistics() {
             onChangeTime={(monthValue) => setCreateTime(monthValue)}
             value={y}
             onChange={(typeValue) => setY(typeValue)}>
-      {((MouthRecord().length !== 0) && (newRecords(((MouthRecord()[0])[1]))).length !== 0)
-        ? <ChartLine axis={moment(createTime).daysInMonth()} value={newRecords((MouthRecord()[0])[1])}/>
-        : <div className="cue">当月没有任何记录哦</div>}
-      {MouthRecord().map(([date, records]) => <div key={date}>
-        <Header>
-          {date}排行榜
-          <RightContent/>
-        </Header>
-        {newRecords(records).map(r => {
-          return <RecordItemWrapper key={r.idR}>
-            <Icon name={getName(r.tagId)}/>
-            <p className="topItem">{getName(r.tagId)}<span>{r.category + numberFilter(r.amount)}</span></p>
-            <p className="bottomItem">{r.note}<span>{moment(r.createdAt).format("MM月DD日 LTS")}</span></p>
-          </RecordItemWrapper>;
-        })}
-      </div>)}
+      <CenterOuter>
+        <CenterTop>
+          {((MouthRecord().length !== 0) && (newRecords(((MouthRecord()[0])[1]))).length !== 0)
+            ? <ChartLine axis={moment(createTime).daysInMonth()} value={newRecords((MouthRecord()[0])[1])}/>
+            : <div className="cue">当月没有任何记录哦</div>}
+        </CenterTop>
+        {MouthRecord().map(([date, records]) => <div key={date}>
+          <Header>
+            {date}排行榜
+            <RightContent/>
+          </Header>
+          {newRecords(records).map(r => {
+            return <RecordItemWrapper key={r.idR}>
+              <Icon name={getName(r.tagId)}/>
+              <p className="topItem">{getName(r.tagId)}<span>{r.category + numberFilter(r.amount)}</span></p>
+              <p className="bottomItem">{r.note}<span>{moment(r.createdAt).format("MM月DD日 LTS")}</span></p>
+            </RecordItemWrapper>;
+          })}
+        </div>)}
+      </CenterOuter>
+
     </Layout>
   );
 }

@@ -4,7 +4,7 @@ import "echarts/lib/component/tooltip";
 import {RecordItem} from "hooks/useRecords";
 import moment from "moment";
 import {numberFilter} from "lib/numberFilter";
-import clone from "../lib/clone";
+import clone from "lib/clone";
 
 const echarts = require("echarts");
 type Props = {
@@ -22,7 +22,7 @@ const ChartLine: React.FC<Props> = (props) => {
       trigger: "axis",
       position: "top",
       triggerOn: "click",
-      formatter: "{c}"
+      formatter: "{c}",
     },
     legend: {
       data: [""]
@@ -53,11 +53,16 @@ const ChartLine: React.FC<Props> = (props) => {
     series: [{
       symbol: "circle",
       lineStyle: {
-        color: "#e1c748"
+        color: "#e1c748",
       },
       itemStyle: {
-        borderWidth: 5,
         color: "#e1c748",
+      },
+      emphasis: {
+        itemStyle: {
+          borderWidth: 5,
+          color: "#e1c748"
+        },
       },
       name: "",
       type: "line",
@@ -66,28 +71,21 @@ const ChartLine: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    options.xAxis.data = [];
-    options.series[0].data = [];
     changeData();
     const chart = echarts.init(document.getElementById("chartLine") as HTMLElement);
     chart.setOption(options);
+    // eslint-disable-next-line
   }, [options]);
   const changeData = () => {
     const newValue = clone(value);
-    for (let i = 0; i < newValue.length - 1; i++) {
+    for (let i = 0; i < newValue.length-1 ; i++) {
       for (let j = i + 1; j < newValue.length; j++) {
         if ((newValue[i].createdAt).slice(0, 10) === (newValue[j].createdAt).slice(0, 10)) {
-          newValue[i].amount += value[j].amount;
-          // newValue.splice(j, 1);
-
+          newValue[i].amount += newValue[j].amount;
         }
       }
     }
-    console.log("外面的");
-    for (let i = 0; i < newValue.length; i++) {
-      console.log(newValue[i]);
-      console.log("里面的");
-    }
+
     for (let i = 1; i <= axis; i++) {
       let t = 0;
       for (let j = 0; j < newValue.length; j++) {
@@ -103,11 +101,10 @@ const ChartLine: React.FC<Props> = (props) => {
         options.series[0].data.push(0);
       }
     }
-
   };
 
   return (
-    <div id="chartLine" style={{width: "100%", height: "30vh", background: "#fbfbfb"}}/>
+    <div id="chartLine" style={{width: "340%", height: "30vh", background: "#fbfbfb"}}/>
   );
 };
 
