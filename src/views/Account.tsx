@@ -53,14 +53,20 @@ const defaultFormDate = {
 };
 
 function Account() {
+
   const [selected, setSelected] = useState(defaultFormDate);
   const onChange = (obj: Partial<typeof selected>) => {
     setSelected({...selected, ...obj});
   };
   const {addRecord} = useRecords();
   const submit = () => {
-    addRecord(selected);
-    setSelected(defaultFormDate);
+    if (selected.amount === 0) {
+      alert("请输入具体金额");
+    } else {
+      addRecord(selected);
+      alert("已记一笔");
+      setSelected(defaultFormDate);
+    }
   };
   const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px"};
 

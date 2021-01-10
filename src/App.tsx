@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
         <Switch>
-          <Redirect exact from="/" to="/account"/>
+          <Redirect exact from="/" to="/detail"/>
           <Route path="/detail">
             <Detail />
           </Route>
