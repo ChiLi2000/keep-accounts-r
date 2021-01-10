@@ -70,8 +70,8 @@ function Account() {
       <CateAndTimeWrapper>
         <MyCategorySection value={selected.category}
                            onChange={category => onChange({category})}/>
-        <TimeSelector value={selected.createdAt}
-                      onChange={createdAt => onChange({createdAt})}
+        <TimeSelector valueTime={selected.createdAt}
+                      onChangeTime={createdAt => onChange({createdAt})}
                       style={styleTime}/>
       </CateAndTimeWrapper>
       <Center>

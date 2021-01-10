@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import moment from "moment";
-import {TimeWrapper} from "components/TimeWrapper";
-import {MyCategorySection} from "components/MyCategorySection";
 import Layout from "components/Layout";
 import Icon from "components/Icon";
 import {RecordItem, useRecords} from "hooks/useRecords";
@@ -38,11 +36,10 @@ function Statistics() {
   const [y, setY] = useState<Category>("-");
 
   return (
-    <Layout>
-      <TimeWrapper value={createTime}
-                   onChange={(monthValue) => setCreateTime(monthValue)}/>
-      <MyCategorySection value={y}
-                         onChange={(typeValue) => setY(typeValue)}/>
+    <Layout valueTime={createTime}
+            onChangeTime={(monthValue) => setCreateTime(monthValue)}
+            value={y}
+            onChange={(typeValue) => setY(typeValue)}>
       {((MouthRecord().length !== 0) && (newRecords(((MouthRecord()[0])[1]))).length !== 0)
         ? <ChartLine axis={moment(createTime).daysInMonth()} value={newRecords((MouthRecord()[0])[1])}/>
         : <div className="cue">当月没有任何记录哦</div>}
@@ -54,7 +51,7 @@ function Statistics() {
         {newRecords(records).map(r => {
           return <RecordItemWrapper key={r.idR}>
             <Icon name={getName(r.tagId)}/>
-            <p className="topItem">{getName(r.tagId)}<span>{r.category+numberFilter(r.amount)}</span></p>
+            <p className="topItem">{getName(r.tagId)}<span>{r.category + numberFilter(r.amount)}</span></p>
             <p className="bottomItem">{r.note}<span>{moment(r.createdAt).format("MM月DD日 LTS")}</span></p>
           </RecordItemWrapper>;
         })}

@@ -9,18 +9,18 @@ const Wrapper = styled.div`
   background: #ffff;
 `;
 type Props = {
-  value: string
-  onChange: (value: string) => void
+  valueTime: string
+  onChangeTime: (value: string) => void
 }
 
 const TimeWrapper: React.FC<Props> = (props) => {
-  const value = props.value;
-  const onChange = props.onChange;
+  const valueTime = props.valueTime;
+  const onChangeTime = props.onChangeTime;
   const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px 16px"};
   return (
     <Wrapper>
-      <TimeSelector value={value}
-                    onChange={onChange}
+      <TimeSelector valueTime={valueTime}
+                    onChangeTime={onChangeTime}
                     type="month"
                     style={styleTime}/>
     </Wrapper>

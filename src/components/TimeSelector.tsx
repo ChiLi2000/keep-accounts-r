@@ -6,27 +6,27 @@ import moment from "moment";
 import "moment/locale/zh-cn";
 
 type Props = {
-  value: string
+  valueTime: string
   type?: "month"
-  onChange: (value: string) => void
+  onChangeTime: (value: string) => void
   style: any
 }
 
 const TimeSelector: React.FC<Props> = (props) => {
   const type = props.type;
-  const value = props.value;
+  const valueTime = props.valueTime;
   const style = props.style;
   const onChange = (date: any, dateString: string) => {
     if (props.type !== undefined) {
-      props.onChange(dateString);
+      props.onChangeTime(dateString);
     } else {
-      props.onChange(moment(date._d).format("YYYY-MM-DD HH:mm:ss"));
+      props.onChangeTime(moment(date._d).format("YYYY-MM-DD HH:mm:ss"));
     }
   };
   return (
     <ConfigProvider locale={zhCN}>
       <DatePicker onChange={onChange}
-                  value={moment(value)}
+                  value={moment(valueTime)}
                   allowClear={false}
                   picker={type}
                   style={style}

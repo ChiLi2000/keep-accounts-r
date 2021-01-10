@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import Layout from "components/Layout";
 import moment from "moment";
-import {TimeWrapper} from "components/TimeWrapper";
-import {MyCategorySection} from "components/MyCategorySection";
 import Icon from "components/Icon";
 import {RecordItem, useRecords} from "hooks/useRecords";
 import {useTags} from "hooks/useTags";
@@ -50,11 +48,10 @@ function Detail() {
     return array.filter(r => createTime.slice(5) === r[0].slice(0, 2));
   };
 
-
   return (
-    <Layout>
-      <TimeWrapper value={createTime} onChange={(monthValue) => setCreateTime(monthValue)}/>
-      <MyCategorySection slot={(type) => MouthTotal(type)}/>
+    <Layout valueTime={createTime}
+            onChangeTime={(monthValue) => setCreateTime(monthValue)}
+            slot={(type) => MouthTotal(type)}>
       {MouthRecord().map(([date, records]) => <div key={date}>
         <Header>
           {date}
