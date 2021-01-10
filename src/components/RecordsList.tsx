@@ -1,4 +1,12 @@
 import styled from "styled-components";
+import {numberFilter} from "lib/numberFilter";
+import Icon from "./Icon";
+import React from "react";
+import moment from "moment";
+import {RecordItem} from "hooks/useRecords";
+import {useTags} from "hooks/useTags";
+import {totalDate} from "lib/totalDate";
+import {Category} from "views/Account";
 
 const RecordItemWrapper = styled.div`
   background: #ffff;
@@ -32,5 +40,59 @@ const Header = styled.h3`
 const RightContent = styled.span`
    font-size: 14px;
 `;
+type Props = {
+  records:RecordItem[]
+  formatArray:string
+  mouthRecords:(array:HashArray)=>HashArray
+  newRecords:(records:RecordItem[])=>RecordItem[]
+  total:boolean
+  type?:Category
+}
+type HashType = {
+  [key: string]: RecordItem[]
+}
+export type HashArray = [string, RecordItem[]][]
+const RecordsItem : React.FC<Props> = (props) => {
+  const {getName} = useTags();
+  const {records,formatArray,total} = props
+  const hash: HashType = {};
+  records.forEach(r => {
+    const key = moment(r.createdAt).format(formatArray);
+    if (!(key in hash)) {
+      hash[key] = [];
+    }
+    hash[key].push(r);
+  });
+  const array = Object.entries(hash).sort((a, b) => {
+    if (a[0] === b[0]) return 0;
+    if (a[0] > b[0]) return -1;
+    if (a[0] < b[0]) return 1;
+    return 0;
+  });
+  const mouthRecords = (array:HashArray) => {
+    return props.mouthRecords(array)
+  };
+  const newRecords = (records: RecordItem[]) => {
+    return props.newRecords(records)
+  };
 
-export {RecordItemWrapper, Header, RightContent};
+  return(
+    <>
+      {mouthRecords(array).map(([date, records]) => <div key={date}>
+        <Header>
+          <span>{date}{props.type && (props.type==='-'?<span>支出排行榜</span>:<span>收入排行榜</span>)}</span>
+          <RightContent>{total&&<div>支出： {numberFilter(totalDate(records, "-"))} 收入： {numberFilter(totalDate(records, "+"))}</div>}  </RightContent>
+        </Header>
+        {newRecords(records).map(r => {
+          return <RecordItemWrapper key={r.idR}>
+            <Icon name={getName(r.tagId)}/>
+            <p className="topItem">{getName(r.tagId)}<span>{r.category + numberFilter(r.amount)}</span></p>
+            <p className="bottomItem">{r.note}<span>{(r.createdAt).slice(11)}</span></p>
+          </RecordItemWrapper>;
+        })}
+      </div>)}
+      {mouthRecords(array).length === 0 ? <div className="cue">当前无记录哦</div> : ""}
+    </>
+  )
+}
+export {RecordsItem};
