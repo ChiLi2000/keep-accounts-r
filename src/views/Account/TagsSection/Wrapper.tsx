@@ -3,6 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.section`
   background: #ffff;
     >ul{
+    margin:0;
     padding: 6px 0;
     display: flex;
     flex-direction: row;

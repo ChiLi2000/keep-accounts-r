@@ -41,20 +41,20 @@ const RightContent = styled.span`
    font-size: 14px;
 `;
 type Props = {
-  records:RecordItem[]
-  formatArray:string
-  mouthRecords:(array:HashArray)=>HashArray
-  newRecords:(records:RecordItem[])=>RecordItem[]
-  total:boolean
-  type?:Category
+  records: RecordItem[]
+  formatArray: string
+  mouthRecords: (array: HashArray) => HashArray
+  newRecords: (records: RecordItem[]) => RecordItem[]
+  total: boolean
+  type?: Category
 }
 type HashType = {
   [key: string]: RecordItem[]
 }
 export type HashArray = [string, RecordItem[]][]
-const RecordsItem : React.FC<Props> = (props) => {
-  const {getName} = useTags();
-  const {records,formatArray,total} = props
+const RecordsItem: React.FC<Props> = (props) => {
+  const {getValue, getName} = useTags();
+  const {records, formatArray, total} = props;
   const hash: HashType = {};
   records.forEach(r => {
     const key = moment(r.createdAt).format(formatArray);
@@ -69,30 +69,32 @@ const RecordsItem : React.FC<Props> = (props) => {
     if (a[0] < b[0]) return 1;
     return 0;
   });
-  const mouthRecords = (array:HashArray) => {
-    return props.mouthRecords(array)
+  const mouthRecords = (array: HashArray) => {
+    return props.mouthRecords(array);
   };
   const newRecords = (records: RecordItem[]) => {
-    return props.newRecords(records)
+    return props.newRecords(records);
   };
 
-  return(
+  return (
     <>
       {mouthRecords(array).map(([date, records]) => <div key={date}>
         <Header>
-          <span>{date}{props.type && (props.type==='-'?<span>支出排行榜</span>:<span>收入排行榜</span>)}</span>
-          <RightContent>{total&&<div>支出： {numberFilter(totalDate(records, "-"))} 收入： {numberFilter(totalDate(records, "+"))}</div>}  </RightContent>
+          <span>{date}{props.type && (props.type === "-" ? <span>支出排行榜</span> : <span>收入排行榜</span>)}</span>
+          <RightContent>{total &&
+          <div>支出： {numberFilter(totalDate(records, "-"))} 收入： {numberFilter(totalDate(records, "+"))}</div>}  </RightContent>
         </Header>
         {newRecords(records).map(r => {
           return <RecordItemWrapper key={r.idR}>
-            <Icon name={getName(r.tagId)}/>
+            <Icon name={getValue(r.tagId)}/>
             <p className="topItem">{getName(r.tagId)}<span>{r.category + numberFilter(r.amount)}</span></p>
-            <p className="bottomItem">{r.note}<span>{(r.createdAt).slice(11)}</span></p>
+            <p className="bottomItem">{r.note}
+              <span>{total ? (r.createdAt).slice(11) : moment(r.createdAt).format("MM月DD日 LTS")}</span></p>
           </RecordItemWrapper>;
         })}
       </div>)}
       {mouthRecords(array).length === 0 ? <div className="cue">当前无记录哦</div> : ""}
     </>
-  )
-}
+  );
+};
 export {RecordsItem};

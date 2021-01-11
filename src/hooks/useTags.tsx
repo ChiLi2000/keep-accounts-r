@@ -72,11 +72,15 @@ const useTags = () => {
     const tag = tags.filter(t => t.id === id)[0];
     return tag ? tag.name : "";
   };
+  const getValue = (id: number) => {
+    const tag = tags.filter(t => t.id === id)[0];
+    return tag ? tag.value : "";
+  };
   const deleteTag = (id: number) => {
     setTags(tags.filter(t => t.id !== id));
   };
 
-  return {tags, addTag, updateTag, getName, deleteTag};
+  return {tags, addTag, updateTag, getName, deleteTag,getValue};
 };
 
 export {useTags};

@@ -3,7 +3,6 @@ import {TimeSelector} from "./TimeSelector";
 import React from "react";
 
 const Wrapper = styled.div`
-  max-width: 100%;
   text-align: center;
   padding: 10px 14px;
   background: #ffff;
