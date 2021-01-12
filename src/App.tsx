@@ -9,6 +9,7 @@ import Account from "./views/Account";
 import Detail from "./views/Detail";
 import Statistics from "./views/Statistics";
 import NotFound from "./views/NotFound";
+import Record from "./views/Record";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           </Route>
           <Route path="/statistics">
             <Statistics />
+          </Route>
+          <Route path="/record">
+            <Record />
           </Route>
           <Route path="*">
             <NotFound />
