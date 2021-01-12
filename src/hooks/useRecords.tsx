@@ -26,5 +26,6 @@ export const useRecords = () => {
     setRecords([...records, record]);
     return true;
   };
+
   return {records, addRecord};
 };

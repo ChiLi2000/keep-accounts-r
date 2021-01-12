@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Icon from "../components/Icon";
+import {useParams} from "react-router-dom";
 
 const Wrapper = styled.section`
 `;
@@ -60,9 +61,14 @@ const SelectButton = styled.div`
   }
 `;
 
-function Record() {
+type Params = {
+  id: string
+}
+
+const Record: React.FC = () => {
+  let {id: idString} = useParams<Params>();
   return (
-    <Wrapper>
+    <Wrapper>{idString}
       <Topbar><Icon name="left"/></Topbar>
       <Main>
         <ItemIcon><Icon name="其它"/>其它</ItemIcon>
@@ -83,6 +89,6 @@ function Record() {
         </SelectButton>
       </Main></Wrapper>
   );
-}
+};
 
 export default Record;

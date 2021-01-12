@@ -7,9 +7,11 @@ import {RecordItem} from "hooks/useRecords";
 import {useTags} from "hooks/useTags";
 import {totalDate} from "lib/totalDate";
 import {Category} from "views/Account";
+import {Link} from "react-router-dom";
 
 const RecordItemWrapper = styled.div`
   background: #ffff;
+  >a{
   display: grid;
   grid: auto auto / 38px 1fr;
   padding:8px 14px;
@@ -27,6 +29,8 @@ const RecordItemWrapper = styled.div`
       justify-content: space-between;
       align-items: center;
     }
+  }
+    
 `;
 const Header = styled.h3`
   margin:0;
@@ -84,12 +88,15 @@ const RecordsItem: React.FC<Props> = (props) => {
           <RightContent>{total &&
           <div>支出： {numberFilter(totalDate(records, "-"))} 收入： {numberFilter(totalDate(records, "+"))}</div>}  </RightContent>
         </Header>
+
         {newRecords(records).map(r => {
           return <RecordItemWrapper key={r.idR}>
-            <Icon name={getValue(r.tagId)}/>
-            <p className="topItem">{getName(r.tagId)}<span>{r.category + numberFilter(r.amount)}</span></p>
-            <p className="bottomItem">{r.note}
-              <span>{total ? (r.createdAt).slice(11) : moment(r.createdAt).format("MM月DD日 LTS")}</span></p>
+            <Link to={"/record/" + r.idR}>
+              <Icon name={getValue(r.tagId)}/>
+              <p className="topItem">{getName(r.tagId)}<span>{r.category + numberFilter(r.amount)}</span></p>
+              <p className="bottomItem">{r.note}
+                <span>{total ? (r.createdAt).slice(11) : moment(r.createdAt).format("MM月DD日 LTS")}</span></p>
+            </Link>
           </RecordItemWrapper>;
         })}
       </div>)}

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import {
-  HashRouter  as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Redirect
@@ -14,26 +14,26 @@ import Record from "./views/Record";
 function App() {
   return (
     <Router>
-        <Switch>
-          <Redirect exact from="/" to="/detail"/>
-          <Route path="/detail">
-            <Detail />
-          </Route>
-          <Route path="/account">
-            <Account />
-          </Route>
-          <Route path="/statistics">
-            <Statistics />
-          </Route>
-          <Route path="/record">
-            <Record />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
+      <Switch>
+        <Redirect exact from="/" to="/detail"/>
+        <Route exact path="/detail">
+          <Detail/>
+        </Route>
+        <Route exact path="/record/:id">
+          <Record/>
+        </Route>
+        <Route exact path="/account">
+          <Account/>
+        </Route>
+        <Route exact path="/statistics">
+          <Statistics/>
+        </Route>
+        <Route path="*">
+          <NotFound/>
+        </Route>
+      </Switch>
     </Router>
   );
 }
 
-export default App
+export default App;
