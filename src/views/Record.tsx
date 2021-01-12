@@ -1,24 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import Icon from "components/Icon";
-import {useParams, useHistory} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {useRecords} from "hooks/useRecords";
 import {useTags} from "hooks/useTags";
 import moment from "moment";
 import {numberFilter} from "lib/numberFilter";
+import {Topbar} from "./Account/Torbar";
 
 const Wrapper = styled.section``;
-const Topbar = styled.div`
-  padding: 10px 14px;
-  .icon{
-    width: 28px;
-    height: 28px;
-  }
-`;
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  margin:0 14px;
+  margin:10px 14px;
   padding: 0 16px;
   background: #ffff;
   border-radius: 16px;
@@ -73,25 +67,17 @@ const Record: React.FC = () => {
   const {findRecord} = useRecords();
   const {getValue, getName} = useTags();
   const record = findRecord(parseInt(idString));
-  const history = useHistory();
-  const onClickBack = () => {
-    history.goBack();
-  };
+
   return (
     <Wrapper>
-      <Topbar><Icon name="left" onClick={onClickBack}/></Topbar>
+      <Topbar centerContext={false}/>
       <Main>
         {record ? <div>
           <ItemIcon><Icon name={getValue(record.tagId)}/>{getName(record.tagId)}</ItemIcon>
           <ItemAmount>{record.category + numberFilter(record.amount)}</ItemAmount>
           <ItemDetail>
-            <div className="left">
-              <p>记录时间</p>
-              <p>备注</p>
-            </div>
-            <div>
-              <p>{moment(record.createdAt).format("YYYY年MM月DD日 LTS")}</p>
-              <p>{record.note ? record.note : "无"}</p>
+            <div className="left"><p>记录时间</p><p>备注</p></div>
+            <div><p>{moment(record.createdAt).format("YYYY年MM月DD日 LTS")}</p><p>{record.note ? record.note : "无"}</p>
             </div>
           </ItemDetail>
           <SelectButton>
@@ -100,8 +86,8 @@ const Record: React.FC = () => {
           </SelectButton>
         </div> : <div>record 不存在</div>
         }
-
-      </Main></Wrapper>
+      </Main>
+    </Wrapper>
   );
 };
 

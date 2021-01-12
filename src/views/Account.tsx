@@ -13,12 +13,14 @@ const Outer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background:#ffff;
 `;
 const Center = styled.div`
   flex-grow: 1;
   overflow: auto;
 `;
 const CateAndTimeWrapper = styled.section`
+  border-top: 1px solid #d3d3d3;
   padding:12px 14px;
   display: flex;
   align-items: center;
@@ -72,7 +74,7 @@ function Account() {
 
   return (
     <Outer>
-      <Topbar/>
+      <Topbar centerContext={true}/>
       <CateAndTimeWrapper>
         <MyCategorySection value={selected.category}
                            onChange={category => onChange({category})}/>

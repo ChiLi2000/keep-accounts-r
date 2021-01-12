@@ -8,15 +8,16 @@ const Wrapper = styled.section`
   align-items: center;
   line-height: 20px;
   padding: 12px 14px;
-  background:white;
-  border-bottom: 1px solid grey;
   .icon{
     width: 28px;
     height: 28px;
   }
 `;
 
-const Topbar: React.FC = ()=>{
+type Props={
+  centerContext:boolean
+}
+const Topbar: React.FC<Props> = (props) => {
   const history = useHistory();
   const onClickBack = () => {
     history.goBack();
@@ -24,7 +25,7 @@ const Topbar: React.FC = ()=>{
   return (
     <Wrapper>
       <Icon name="left" onClick={onClickBack}/>
-      <span>记账</span>
+      <span>{props.centerContext?'记账':''}</span>
       <Icon/>
     </Wrapper>
   )
