@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import Icon from "../components/Icon";
-import {useParams} from "react-router-dom";
+import Icon from "components/Icon";
+import {useParams, useHistory} from "react-router-dom";
+import {useRecords} from "hooks/useRecords";
+import {useTags} from "hooks/useTags";
+import moment from "moment";
+import {numberFilter} from "lib/numberFilter";
 
-const Wrapper = styled.section`
-`;
+const Wrapper = styled.section``;
 const Topbar = styled.div`
   padding: 10px 14px;
   .icon{
@@ -24,7 +27,7 @@ const ItemIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0 8px 0;
+  padding: 30px 0 8px 0;
   .icon{
     width: 28px;
     height: 28px;
@@ -67,26 +70,37 @@ type Params = {
 
 const Record: React.FC = () => {
   let {id: idString} = useParams<Params>();
+  const {findRecord} = useRecords();
+  const {getValue, getName} = useTags();
+  const record = findRecord(parseInt(idString));
+  const history = useHistory();
+  const onClickBack = () => {
+    history.goBack();
+  };
   return (
-    <Wrapper>{idString}
-      <Topbar><Icon name="left"/></Topbar>
+    <Wrapper>
+      <Topbar><Icon name="left" onClick={onClickBack}/></Topbar>
       <Main>
-        <ItemIcon><Icon name="其它"/>其它</ItemIcon>
-        <ItemAmount>-10.00</ItemAmount>
-        <ItemDetail>
-          <div className="left">
-            <p>记录时间</p>
-            <p>备注</p>
-          </div>
-          <div>
-            <p>2021年1月8日</p>
-            <p>呜呜呜</p>
-          </div>
-        </ItemDetail>
-        <SelectButton>
-          <button><Icon name="delete"/>删除</button>
-          <button><Icon name="edit"/>编辑</button>
-        </SelectButton>
+        {record ? <div>
+          <ItemIcon><Icon name={getValue(record.tagId)}/>{getName(record.tagId)}</ItemIcon>
+          <ItemAmount>{record.category + numberFilter(record.amount)}</ItemAmount>
+          <ItemDetail>
+            <div className="left">
+              <p>记录时间</p>
+              <p>备注</p>
+            </div>
+            <div>
+              <p>{moment(record.createdAt).format("YYYY年MM月DD日 LTS")}</p>
+              <p>{record.note ? record.note : "无"}</p>
+            </div>
+          </ItemDetail>
+          <SelectButton>
+            <button><Icon name="delete"/>删除</button>
+            <button><Icon name="edit"/>编辑</button>
+          </SelectButton>
+        </div> : <div>record 不存在</div>
+        }
+
       </Main></Wrapper>
   );
 };

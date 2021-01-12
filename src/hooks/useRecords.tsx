@@ -27,5 +27,7 @@ export const useRecords = () => {
     return true;
   };
 
-  return {records, addRecord};
+  const findRecord = (idR: number) => records.filter(r => r.idR === idR)[0];
+
+  return {records, addRecord, findRecord};
 };
