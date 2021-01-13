@@ -5,12 +5,12 @@ import React from "react";
 import {MyCategorySection} from "./MyCategorySection";
 import {Category} from "hooks/useRecords";
 
-const Wrapper = styled.nav`
+export const Wrapper = styled.nav`
   height: 100vh;
   display: flex;
   flex-direction: column;
 `;
-const Main = styled.div`
+export const Main = styled.div`
   flex-grow: 1;
   overflow: auto;
 `;

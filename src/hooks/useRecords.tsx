@@ -32,5 +32,9 @@ export const useRecords = () => {
   const updateRecord = (idR: number, newRecord: RecordItem) => {
     setRecords([...(records.filter(r => r.idR !== idR)), newRecord]);
   };
-  return {records, addRecord, findRecord, updateRecord};
+
+  const deleteRecord = (idR: number) => {
+    setRecords(records.filter(r => r.idR !== idR));
+  };
+  return {records, addRecord, findRecord, updateRecord, deleteRecord};
 };

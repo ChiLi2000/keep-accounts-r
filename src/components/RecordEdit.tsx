@@ -7,16 +7,10 @@ import {NotesSection} from "views/Account/NotesSection";
 import {NumberPadSection} from "views/Account/NumberPadSection";
 import {Topbar} from "views/Account/Torbar";
 import {TagsSection} from "views/Account/TagsSection";
+import {Main, Wrapper} from "./Layout";
 
-const Outer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+const Outer = styled(Wrapper)`
   background:#ffff;
-`;
-const Center = styled.div`
-  flex-grow: 1;
-  overflow: auto;
 `;
 const CateAndTimeWrapper = styled.section`
   border-top: 1px solid #d3d3d3;
@@ -81,12 +75,12 @@ const RecordEdit: React.FC<Props> = (props) => {
                       onChangeTime={createdAt => onChange({createdAt})}
                       style={styleTime}/>
       </CateAndTimeWrapper>
-      <Center>
+      <Main>
         <TagsSection value={newRecord.tagId}
                      onChange={(tagId: number) => onChange({tagId})}
                      type={newRecord.category}
                      autoSelectedTag={autoSelectedTag}/>
-      </Center>
+      </Main>
       <NotesSection value={newRecord.note}
                     onChange={(note: string) => onChange({note})}/>
       <NumberPadSection value={newRecord.amount}

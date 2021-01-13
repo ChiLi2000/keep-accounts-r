@@ -1,5 +1,4 @@
-import React from "react";
-import styled from "styled-components";
+import React, {useState} from "react";
 import Icon from "components/Icon";
 import {Link, useParams} from "react-router-dom";
 import {useRecords} from "hooks/useRecords";
@@ -7,56 +6,8 @@ import {useTags} from "hooks/useTags";
 import moment from "moment";
 import {numberFilter} from "lib/numberFilter";
 import {Topbar} from "./Account/Torbar";
-
-const Wrapper = styled.section``;
-const Main = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin:10px 14px;
-  padding: 0 16px;
-  background: #ffff;
-  border-radius: 16px;
-`;
-const ItemIcon = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 0 8px 0;
-  .icon{
-    width: 28px;
-    height: 28px;
-    margin-right:10px;
-  }
-`;
-const ItemAmount = styled.div`
-  text-align: center;
-  padding:16px 0;
-  font-size: 28px;
-  font-weight: 600
-`;
-const ItemDetail = styled.div`
-  padding:16px 12px 0 12px;
-  display: flex;
-  flex-direction: row;
-  >div{
-   padding: 8px 0;
-  }
-`;
-const SelectButton = styled.div`
-  border-top: 1px solid #dedede;
-  >button{
-    width: 50%;
-    padding:18px 0;
-    background: transparent;
-    border:none;
-    text-align: center;
-    .icon{
-      width: 16px;
-      height: 16px;
-      margin-right: 10px;
-    }
-  }
-`;
+import {Modal} from "antd";
+import {ItemAmount, ItemDetail, ItemIcon, Main, ModalWrapper, SelectButton} from "./Record/Wrapper";
 
 export type Params = {
   id: string
@@ -64,12 +15,23 @@ export type Params = {
 
 const Record: React.FC = () => {
   let {id: idString} = useParams<Params>();
-  const {findRecord} = useRecords();
+  const {findRecord, deleteRecord} = useRecords();
   const {getValue, getName} = useTags();
   const record = findRecord(parseInt(idString));
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+  const deleteR = () => {
+    deleteRecord(parseInt(idString));
+    handleCancel();
+    alert("已删除");
+  };
   return (
-    <Wrapper>
+    <>
       <Topbar centerContext={false}/>
       <Main>
         {record ? <div>
@@ -81,13 +43,21 @@ const Record: React.FC = () => {
             </div>
           </ItemDetail>
           <SelectButton>
-            <button><Icon name="delete"/>删除</button>
+            <button onClick={showModal}><Icon name="delete"/>删除</button>
             <button><Link to={"/update/" + record.idR}><Icon name="edit"/>编辑</Link></button>
           </SelectButton>
         </div> : <div>record 不存在</div>
         }
       </Main>
-    </Wrapper>
+      <Modal title="" visible={isModalVisible}
+             centered closable={false}
+             onOk={deleteR} onCancel={handleCancel}
+             okText="删除" cancelText="取消">
+        <ModalWrapper>
+          删除后无法恢复，是否删除
+        </ModalWrapper>
+      </Modal>
+    </>
   );
 };
 
