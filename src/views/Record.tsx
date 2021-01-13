@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Icon from "components/Icon";
-import {Link, useParams} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import {useRecords} from "hooks/useRecords";
 import {useTags} from "hooks/useTags";
 import moment from "moment";
@@ -18,6 +18,7 @@ const Record: React.FC = () => {
   const {findRecord, deleteRecord} = useRecords();
   const {getValue, getName} = useTags();
   const record = findRecord(parseInt(idString));
+  const history = useHistory();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
     setIsModalVisible(true);
@@ -28,8 +29,12 @@ const Record: React.FC = () => {
   const deleteR = () => {
     deleteRecord(parseInt(idString));
     handleCancel();
+    setTimeout(() => {
+      history.push("/detail");
+    }, 0);
     alert("已删除");
   };
+
   return (
     <>
       <Topbar centerContext={false}/>

@@ -8,6 +8,7 @@ import {NumberPadSection} from "views/Account/NumberPadSection";
 import {Topbar} from "views/Account/Torbar";
 import {TagsSection} from "views/Account/TagsSection";
 import {Main, Wrapper} from "./Layout";
+import {useHistory} from "react-router-dom";
 
 const Outer = styled(Wrapper)`
   background:#ffff;
@@ -51,16 +52,22 @@ const RecordEdit: React.FC<Props> = (props) => {
     setNewRecord({...newRecord, ...obj});
   };
   const {addRecord, updateRecord} = useRecords();
+  const history = useHistory();
   const submit = () => {
     if (newRecord.amount === 0) {
       alert("请输入具体金额");
     } else {
       if (idR !== undefined) {
         updateRecord(idR, newRecord);
+        history.goBack();
         alert("修改成功");
       } else {
         addRecord(newRecord);
+        setTimeout(() => {
+          history.push("/detail");
+        }, 0);
         alert("已记一笔");
+
       }
     }
   };
@@ -90,5 +97,6 @@ const RecordEdit: React.FC<Props> = (props) => {
     </Outer>
   );
 };
+
 
 export default RecordEdit;
