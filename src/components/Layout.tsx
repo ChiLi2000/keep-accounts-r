@@ -3,7 +3,7 @@ import Nav from "./Nav";
 import {TimeWrapper} from "./TimeWrapper";
 import React from "react";
 import {MyCategorySection} from "./MyCategorySection";
-import {Category} from "views/Account";
+import {Category} from "hooks/useRecords";
 
 const Wrapper = styled.nav`
   height: 100vh;

@@ -1,8 +1,8 @@
-import {Category} from "views/Account";
 import {useEffect, useState} from "react";
 import {useUpdate} from "./useUpdate";
 import {createIdR} from "lib/createId";
 
+export type Category = "-" | "+"
 export type RecordItem = {
   idR: number,
   category: Category,
@@ -11,7 +11,7 @@ export type RecordItem = {
   amount: number,
   createdAt: string
 }
-type newRecordItem = Omit<RecordItem, "idR">
+export type newRecordItem = Omit<RecordItem, "idR">
 export const useRecords = () => {
   const [records, setRecords] = useState<RecordItem[]>([]);
   useEffect(() => {
@@ -29,5 +29,8 @@ export const useRecords = () => {
 
   const findRecord = (idR: number) => records.filter(r => r.idR === idR)[0];
 
-  return {records, addRecord, findRecord};
+  const updateRecord = (idR: number, newRecord: RecordItem) => {
+    setRecords([...(records.filter(r => r.idR !== idR)), newRecord]);
+  };
+  return {records, addRecord, findRecord, updateRecord};
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Icon from "components/Icon";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {useRecords} from "hooks/useRecords";
 import {useTags} from "hooks/useTags";
 import moment from "moment";
@@ -58,7 +58,7 @@ const SelectButton = styled.div`
   }
 `;
 
-type Params = {
+export type Params = {
   id: string
 }
 
@@ -82,7 +82,7 @@ const Record: React.FC = () => {
           </ItemDetail>
           <SelectButton>
             <button><Icon name="delete"/>删除</button>
-            <button><Icon name="edit"/>编辑</button>
+            <button><Link to={"/update/" + record.idR}><Icon name="edit"/>编辑</Link></button>
           </SelectButton>
         </div> : <div>record 不存在</div>
         }

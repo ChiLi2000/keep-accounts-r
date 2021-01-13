@@ -3,11 +3,11 @@ import {numberFilter} from "lib/numberFilter";
 import Icon from "./Icon";
 import React from "react";
 import moment from "moment";
-import {RecordItem} from "hooks/useRecords";
+import {Category, RecordItem} from "hooks/useRecords";
 import {useTags} from "hooks/useTags";
 import {totalDate} from "lib/totalDate";
-import {Category} from "views/Account";
 import {Link} from "react-router-dom";
+
 
 const RecordItemWrapper = styled.div`
   background: #ffff;

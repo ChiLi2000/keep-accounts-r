@@ -1,5 +1,4 @@
-import {RecordItem} from "hooks/useRecords";
-import {Category} from "views/Account";
+import {Category, RecordItem} from "hooks/useRecords";
 
 const totalDate = (records: RecordItem[], type: Category) => {
   return records.filter(r => r.category === type)

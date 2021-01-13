@@ -10,6 +10,7 @@ import Detail from "./views/Detail";
 import Statistics from "./views/Statistics";
 import NotFound from "./views/NotFound";
 import Record from "./views/Record";
+import Update from "./views/Update";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route exact path="/record/:id">
           <Record/>
+        </Route>
+        <Route exact path="/update/:id">
+          <Update/>
         </Route>
         <Route exact path="/account">
           <Account/>

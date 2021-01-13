@@ -10,6 +10,7 @@ type Props = {
   value: number,
   onChange: (selected: number) => void
   type: string
+  autoSelectedTag: boolean
 }
 
 const TagsSection: React.FC<Props> = (props) => {
@@ -35,7 +36,6 @@ const TagsSection: React.FC<Props> = (props) => {
       setNewName(getName(tagId));
     }
   };
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showModal = () => {
     setIsModalVisible(true);
@@ -55,15 +55,16 @@ const TagsSection: React.FC<Props> = (props) => {
     window.alert("删除成功");
     selectedTagFirst();
   };
-
+  const [autoSelectedTag, setAutoSelectedTag] = useState(props.autoSelectedTag);
   useEffect(() => {
-    selectedTagFirst();
+    autoSelectedTag && selectedTagFirst();
+    setAutoSelectedTag(true);
     // eslint-disable-next-line
   }, [type]);
-
   const selectedTagFirst = () => {
     type === "-" ? onToggleTag(1) : onToggleTag(18);
   };
+
   return (
     <>
       <Wrapper>

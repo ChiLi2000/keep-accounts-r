@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import moment from "moment";
 import Layout from "components/Layout";
-import {RecordItem, useRecords} from "hooks/useRecords";
-import {Category} from "./Account";
+import {Category, RecordItem, useRecords} from "hooks/useRecords";
 import {HashArray, RecordsItem} from "components/RecordsList";
 import ChartLine from "components/ChartLine";
 import styled from "styled-components";

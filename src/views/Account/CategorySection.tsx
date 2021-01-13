@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {Category} from "../Account";
 import {numberFilter} from "lib/numberFilter";
+import {Category} from "hooks/useRecords";
 
 type Props = {
   value?: Category

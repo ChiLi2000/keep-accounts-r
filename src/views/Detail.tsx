@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import Layout from "components/Layout";
 import moment from "moment";
-import {RecordItem, useRecords} from "hooks/useRecords";
-import {Category} from "./Account";
+import {Category, RecordItem, useRecords} from "hooks/useRecords";
 import {HashArray, RecordsItem} from "components/RecordsList";
 import {totalDate} from "lib/totalDate";
 
