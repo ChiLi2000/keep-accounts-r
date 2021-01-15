@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {createId} from "../lib/createId";
 import {useUpdate} from "./useUpdate";
+import {message} from "antd";
 
 type Tag = {
   id: number,
@@ -52,11 +53,11 @@ const useTags = () => {
     const tagNames = (tags.filter(t => t.genre === genre)).map(t => t.name);
     if (tagName !== null) {
       if (tagName === "") {
-        alert("类别名不能为空");
+        message.warning({content: "类别名不能为空", style: {marginTop: "40vh"}});
       } else if (tagNames.indexOf(tagName) >= 0) {
-        alert("类别名重复了");
+        message.warning({content: "类别名重复", style: {marginTop: "40vh"}});
       } else if (tagName.length > 4) {
-        alert("类别名超长了");
+        message.warning({content: "类别名超长", style: {marginTop: "40vh"}});
       } else {
         setTags([...tags, {id: createId(), genre, name: tagName, value: "其它"}]);
       }
@@ -65,7 +66,7 @@ const useTags = () => {
   const updateTag = (id: number, genre: string, {name}: { name: string }) => {
     const newTags = tags.filter(t => t.genre === genre);
     newTags.filter(t => t.name === name)[0]
-      ? alert("标签名重复")
+      ? message.warning({content: "类别名重复", style: {marginTop: "40vh"}})
       : setTags(tags.map(t => t.id === id ? {id, genre, name: name, value: "其它"} : t));
   };
   const getName = (id: number) => {
@@ -80,7 +81,7 @@ const useTags = () => {
     setTags(tags.filter(t => t.id !== id));
   };
 
-  return {tags, addTag, updateTag, getName, deleteTag,getValue};
+  return {tags, addTag, updateTag, getName, deleteTag, getValue};
 };
 
 export {useTags};

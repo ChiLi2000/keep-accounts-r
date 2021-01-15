@@ -6,8 +6,9 @@ import {useTags} from "hooks/useTags";
 import moment from "moment";
 import {numberFilter} from "lib/numberFilter";
 import {Topbar} from "./Account/Torbar";
-import {Modal} from "antd";
-import {ItemAmount, ItemDetail, ItemIcon, Main, ModalWrapper, SelectButton} from "./Record/Wrapper";
+import {message} from "antd";
+import {ItemAmount, ItemDetail, ItemIcon, Main,  SelectButton} from "./Record/Wrapper";
+import {DeleteCue} from "../components/DeleteCue";
 
 export type Params = {
   id: string
@@ -32,7 +33,7 @@ const Record: React.FC = () => {
     setTimeout(() => {
       history.push("/detail");
     }, 0);
-    alert("已删除");
+    message.success({content:'已删除',style:{marginTop:'40vh'}})
   };
 
   return (
@@ -51,17 +52,12 @@ const Record: React.FC = () => {
             <button onClick={showModal}><Icon name="delete"/>删除</button>
             <button><Link to={"/update/" + record.idR}><Icon name="edit"/>编辑</Link></button>
           </SelectButton>
-        </div> : <div>record 不存在</div>
+        </div> : ''
         }
       </Main>
-      <Modal title="" visible={isModalVisible}
-             centered closable={false}
-             onOk={deleteR} onCancel={handleCancel}
-             okText="删除" cancelText="取消">
-        <ModalWrapper>
-          删除后无法恢复，是否删除
-        </ModalWrapper>
-      </Modal>
+      <DeleteCue visible={isModalVisible} onOk={deleteR} onCancel={handleCancel}>
+        删除后无法恢复，是否删除
+      </DeleteCue>
     </>
   );
 };

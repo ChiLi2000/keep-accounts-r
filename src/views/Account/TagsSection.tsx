@@ -1,10 +1,11 @@
 import Icon from "components/Icon";
 import React, {ChangeEventHandler, useEffect, useState} from "react";
 import {useTags} from "hooks/useTags";
-import {Button, Modal} from "antd";
+import {Button, message, Modal} from "antd";
 import {onItemTouchEnd, onItemTouchStart} from "lib/useLongPress";
 import {Wrapper} from "./TagsSection/Wrapper";
 import {LabelWrapper} from "./TagsSection/LabelWrapper";
+import {DeleteCue} from "components/DeleteCue";
 
 type Props = {
   value: number,
@@ -19,7 +20,6 @@ const TagsSection: React.FC<Props> = (props) => {
   const [id, setId] = useState(0);
   const [newName, setNewName] = useState("");
   const type = props.type;
-
   const onToggleTag = (tagId: number) => {
     if (selectedTagId !== tagId) {
       props.onChange(tagId);
@@ -37,13 +37,10 @@ const TagsSection: React.FC<Props> = (props) => {
     }
   };
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  const showModal = () => {setIsModalVisible(true);};
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  const handleCancel = () => {setIsModalVisible(false);};
+
   const updateTagId = (genre: string) => {
     handleCancel();
     updateTag(id, genre, {name: newName});
@@ -52,7 +49,8 @@ const TagsSection: React.FC<Props> = (props) => {
   const deleteTagId = () => {
     handleCancel();
     deleteTag(id);
-    window.alert("删除成功");
+    message.success({content: "已删除", style: {marginTop: "40vh"}});
+    setDeleteCueVisible(false);
     selectedTagFirst();
   };
   const [autoSelectedTag, setAutoSelectedTag] = useState(props.autoSelectedTag);
@@ -65,6 +63,7 @@ const TagsSection: React.FC<Props> = (props) => {
     type === "-" ? onToggleTag(1) : onToggleTag(18);
   };
 
+  const [deleteCueVisible, setDeleteCueVisible] = useState(false);
   return (
     <>
       <Wrapper>
@@ -81,9 +80,9 @@ const TagsSection: React.FC<Props> = (props) => {
           <li onClick={() => addTag(type)}><Icon name='add'/>添加</li>
         </ul>
       </Wrapper>
-      <Modal title="请编辑类别名" visible={isModalVisible}
+      <Modal title="请编辑类别名" visible={isModalVisible} onCancel={handleCancel}
              footer={[
-               <Button key="删除" onClick={deleteTagId}>删除</Button>,
+               <Button key="删除" onClick={() => setDeleteCueVisible(true)}>删除</Button>,
                <Button key="取消" onClick={handleCancel}>取消</Button>,
                <Button key="确定" type="primary" onClick={() => updateTagId(type)}>确定</Button>
              ]}>
@@ -92,6 +91,9 @@ const TagsSection: React.FC<Props> = (props) => {
           <p>{newName.length} / 4</p>
         </LabelWrapper>
       </Modal>
+      <DeleteCue visible={deleteCueVisible} onOk={deleteTagId} onCancel={() => setDeleteCueVisible(false)}>
+        删除后,该分类下的内容将归为 ”其它“ 分类
+      </DeleteCue>
     </>
   );
 };

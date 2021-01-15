@@ -5,7 +5,7 @@ import {Category, RecordItem, useRecords} from "hooks/useRecords";
 import {HashArray, RecordsItem} from "components/RecordsList";
 import {totalDate} from "lib/totalDate";
 
-function Detail() {
+function Detail(){
   const [createTime, setCreateTime] = useState(moment(new Date().toISOString()).format("YYYY-MM"));
   const {records} = useRecords();
   const newRecords = (records: RecordItem[]) => {

@@ -53,10 +53,4 @@ const SelectButton = styled.div`
   }
 `;
 
-const ModalWrapper = styled.p`
-  padding: 0;
-  margin:10px 0 0;
-  text-align: center;
-`;
-
-export {ModalWrapper, SelectButton, ItemDetail, ItemAmount, ItemIcon, Main};
+export {SelectButton, ItemDetail, ItemAmount, ItemIcon, Main};
