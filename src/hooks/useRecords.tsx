@@ -36,5 +36,10 @@ export const useRecords = () => {
   const deleteRecord = (idR: number) => {
     setRecords(records.filter(r => r.idR !== idR));
   };
-  return {records, addRecord, findRecord, updateRecord, deleteRecord};
+  const defaultRecord = (tagId: number) => {
+    if(records.filter(r => r.tagId === tagId)[0]){
+      setRecords([...(records.filter(r => r.tagId !== tagId))])
+    }
+  };
+  return {records, addRecord, findRecord, updateRecord, deleteRecord, defaultRecord};
 };

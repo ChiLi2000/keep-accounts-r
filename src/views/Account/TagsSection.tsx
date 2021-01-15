@@ -12,10 +12,11 @@ type Props = {
   onChange: (selected: number) => void
   type: string
   autoSelectedTag: boolean
+  TagIdByRecord:(id:number)=>void
 }
 
 const TagsSection: React.FC<Props> = (props) => {
-  const {tags, addTag, getName, updateTag, deleteTag} = useTags();
+  const {tags, addTag, getName, updateTag,deleteTag} = useTags();
   const selectedTagId = props.value;
   const [id, setId] = useState(0);
   const [newName, setNewName] = useState("");
@@ -47,6 +48,7 @@ const TagsSection: React.FC<Props> = (props) => {
   };
 
   const deleteTagId = () => {
+    props.TagIdByRecord(id)
     handleCancel();
     deleteTag(id);
     message.success({content: "已删除", style: {marginTop: "40vh"}});
@@ -92,7 +94,7 @@ const TagsSection: React.FC<Props> = (props) => {
         </LabelWrapper>
       </Modal>
       <DeleteCue visible={deleteCueVisible} onOk={deleteTagId} onCancel={() => setDeleteCueVisible(false)}>
-        删除后,该分类下的内容将归为 ”其它“ 分类
+        删除后，该分类下的记录也将被删除
       </DeleteCue>
     </>
   );

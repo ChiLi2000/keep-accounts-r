@@ -15,7 +15,8 @@ type Props = {
 }
 
 const DeleteCue: React.FC<Props> = (props) => {
-  const {visible, onOk, onCancel, children} = props;
+  const {visible,onCancel,onOk,children} = props;
+
   return (
     <Modal title="" visible={visible}
            centered closable={false}

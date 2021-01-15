@@ -52,7 +52,7 @@ const RecordEdit: React.FC<Props> = (props) => {
   const onChange = (obj: Partial<typeof newRecord>) => {
     setNewRecord({...newRecord, ...obj});
   };
-  const {addRecord, updateRecord} = useRecords();
+  const {addRecord, updateRecord,defaultRecord} = useRecords();
   const history = useHistory();
   const submit = () => {
     if (newRecord.amount === 0) {
@@ -72,6 +72,9 @@ const RecordEdit: React.FC<Props> = (props) => {
     }
   };
   const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px"};
+  const TagIdByRecord = (id:number)=>{
+    defaultRecord(id)
+  }
   return (
     <Outer>
       <Topbar centerContext={true}/>
@@ -86,7 +89,8 @@ const RecordEdit: React.FC<Props> = (props) => {
         <TagsSection value={newRecord.tagId}
                      onChange={(tagId: number) => onChange({tagId})}
                      type={newRecord.category}
-                     autoSelectedTag={autoSelectedTag}/>
+                     autoSelectedTag={autoSelectedTag}
+                     TagIdByRecord={id=>TagIdByRecord(id)}/>
       </Main>
       <NotesSection value={newRecord.note}
                     onChange={(note: string) => onChange({note})}/>
