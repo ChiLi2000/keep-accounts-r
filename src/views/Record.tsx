@@ -30,9 +30,7 @@ const Record: React.FC = () => {
   const deleteR = () => {
     deleteRecord(parseInt(idString));
     handleCancel();
-    setTimeout(() => {
-      history.push("/detail");
-    }, 0);
+    history.goBack()
     message.success({content:'已删除',style:{marginTop:'40vh'}})
   };
 

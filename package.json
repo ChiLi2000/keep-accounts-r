@@ -2,6 +2,7 @@
   "name": "keep-accounts-r",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ChiLi2000.github.io/keep-accounts-r-website/",
   "dependencies": {
     "@babel/core": "7.12.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.2",
