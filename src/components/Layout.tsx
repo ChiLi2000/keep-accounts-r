@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Nav from "./Nav";
 import {TimeWrapper} from "./TimeWrapper";
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import {MyCategorySection} from "./MyCategorySection";
 import {Category} from "hooks/useRecords";
 
@@ -23,8 +23,15 @@ type Props = {
 }
 const Layout: React.FC<Props> = (props) => {
   const {children, valueTime, onChangeTime, slot, value, onChange} = props;
+  const mainRef = useRef<HTMLDivElement>(null);
+  useEffect(
+    ()=>{
+      if(mainRef.current!==null){
+        mainRef.current.style.height = document.body.clientHeight+"px"
+      }
+    },[])
   return (
-    <Wrapper>
+    <Wrapper ref={mainRef}>
       <TimeWrapper valueTime={valueTime} onChangeTime={onChangeTime}/>
       <MyCategorySection slot={slot} value={value} onChange={onChange}/>
       <Main>

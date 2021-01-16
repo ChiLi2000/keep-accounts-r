@@ -10,7 +10,7 @@ const MyCategorySection = styled(CategorySection)`
     margin:0;
     > li {
       width: 50%;
-      padding: 6px 16px;
+      padding: 6px 0;
       margin: 0 14px;
       display: flex;
       flex-direction: column;
@@ -18,7 +18,7 @@ const MyCategorySection = styled(CategorySection)`
           border-bottom:2px solid gray;
         }
         >span{
-          padding: 16px 16px 0 16px;
+          padding: 16px 0 0 ;
           font-size: 28px;
           font-weight: 600
        }
