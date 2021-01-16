@@ -53,11 +53,11 @@ const useTags = () => {
     const tagNames = (tags.filter(t => t.genre === genre)).map(t => t.name);
     if (tagName !== null) {
       if (tagName === "") {
-        message.warning({content: "类别名不能为空", style: {marginTop: "40vh"}});
+        message.warning({content: "类别名不能为空", style: {marginTop: "40vh"},duration:1});
       } else if (tagNames.indexOf(tagName) >= 0) {
-        message.warning({content: "类别名重复", style: {marginTop: "40vh"}});
+        message.warning({content: "类别名重复", style: {marginTop: "40vh"},duration:1});
       } else if (tagName.length > 4) {
-        message.warning({content: "类别名超长", style: {marginTop: "40vh"}});
+        message.warning({content: "类别名超长", style: {marginTop: "40vh"},duration:1});
       } else {
         setTags([...tags, {id: createId(), genre, name: tagName, value: "其它"}]);
       }
@@ -65,9 +65,14 @@ const useTags = () => {
   };
   const updateTag = (id: number, genre: string, {name}: { name: string }) => {
     const newTags = tags.filter(t => t.genre === genre);
-    newTags.filter(t => t.name === name)[0]
-      ? message.warning({content: "类别名重复", style: {marginTop: "40vh"}})
-      : setTags(tags.map(t => t.id === id ? {id, genre, name: name, value: "其它"} : t));
+    if( name === ""){
+      message.warning({content: "类别名不能为空", style: {marginTop: "40vh"},duration:1});
+    }else if(newTags.filter(t => t.name === name)[0]){
+      message.warning({content: "类别名重复", style: {marginTop: "40vh"},duration:1})
+    }else{
+      setTags(tags.map(t => t.id === id ? {id, genre, name: name, value: "其它"} : t))
+    }
+
   };
   const getName = (id: number) => {
     const tag = tags.filter(t => t.id === id)[0];

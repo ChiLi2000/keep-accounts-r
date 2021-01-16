@@ -6,9 +6,8 @@ import {useTags} from "hooks/useTags";
 import moment from "moment";
 import {numberFilter} from "lib/numberFilter";
 import {Topbar} from "./Account/Torbar";
-import {message} from "antd";
 import {ItemAmount, ItemDetail, ItemIcon, Main,  SelectButton} from "./Record/Wrapper";
-import {DeleteCue} from "../components/DeleteCue";
+import {DeleteCue} from "components/DeleteCue";
 
 export type Params = {
   id: string
@@ -31,7 +30,6 @@ const Record: React.FC = () => {
     deleteRecord(parseInt(idString));
     handleCancel();
     history.goBack()
-    message.success({content:'已删除',style:{marginTop:'40vh'}})
   };
 
   return (

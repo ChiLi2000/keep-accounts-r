@@ -9,7 +9,6 @@ import {Topbar} from "views/Account/Torbar";
 import {TagsSection} from "views/Account/TagsSection";
 import {Main, Wrapper} from "./Layout";
 import {useHistory} from "react-router-dom";
-import {message} from "antd";
 
 const Outer = styled(Wrapper)`
   background:#ffff;
@@ -61,13 +60,11 @@ const RecordEdit: React.FC<Props> = (props) => {
       if (idR !== undefined) {
         updateRecord(idR, newRecord);
         history.goBack();
-        message.success({content: "修改成功", style: {marginTop: "46vh"}});
       } else {
         addRecord(newRecord);
         setTimeout(() => {
           history.push("/detail");
         }, 0);
-        message.success({content: "已记一笔", style: {marginTop: "40vh"}});
       }
     }
   };

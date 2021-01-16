@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
-import React, {ChangeEventHandler, useEffect, useState} from "react";
+import React, {ChangeEventHandler, useEffect,  useState} from "react";
 import {useTags} from "hooks/useTags";
-import {Button, message, Modal} from "antd";
+import {Button, Modal} from "antd";
 import {onItemTouchEnd, onItemTouchStart} from "lib/useLongPress";
 import {Wrapper} from "./TagsSection/Wrapper";
 import {LabelWrapper} from "./TagsSection/LabelWrapper";
@@ -51,7 +51,6 @@ const TagsSection: React.FC<Props> = (props) => {
     props.TagIdByRecord(id)
     handleCancel();
     deleteTag(id);
-    message.success({content: "已删除", style: {marginTop: "40vh"}});
     setDeleteCueVisible(false);
     selectedTagFirst();
   };
@@ -64,7 +63,6 @@ const TagsSection: React.FC<Props> = (props) => {
   const selectedTagFirst = () => {
     type === "-" ? onToggleTag(1) : onToggleTag(18);
   };
-
   const [deleteCueVisible, setDeleteCueVisible] = useState(false);
   return (
     <>

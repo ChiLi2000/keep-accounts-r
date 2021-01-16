@@ -30,6 +30,7 @@ const TimeSelector: React.FC<Props> = (props) => {
                   allowClear={false}
                   picker={type}
                   style={style}
+                  inputReadOnly={true}
       />
     </ConfigProvider>
   );
