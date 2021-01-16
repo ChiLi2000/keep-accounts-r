@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Category, useRecords} from "hooks/useRecords";
 import {TimeSelector} from "./TimeSelector";
 import {CategorySection} from "views/Account/CategorySection";
@@ -52,7 +52,7 @@ const RecordEdit: React.FC<Props> = (props) => {
   const onChange = (obj: Partial<typeof newRecord>) => {
     setNewRecord({...newRecord, ...obj});
   };
-  const {addRecord, updateRecord,defaultRecord} = useRecords();
+  const {addRecord, updateRecord, defaultRecord} = useRecords();
   const history = useHistory();
   const submit = () => {
     if (newRecord.amount === 0) {
@@ -61,22 +61,30 @@ const RecordEdit: React.FC<Props> = (props) => {
       if (idR !== undefined) {
         updateRecord(idR, newRecord);
         history.goBack();
-        message.success({content:'修改成功',style:{marginTop:'46vh'}})
+        message.success({content: "修改成功", style: {marginTop: "46vh"}});
       } else {
         addRecord(newRecord);
         setTimeout(() => {
           history.push("/detail");
         }, 0);
-        message.success({content:'已记一笔',style:{marginTop:'40vh'}})
+        message.success({content: "已记一笔", style: {marginTop: "40vh"}});
       }
     }
   };
   const styleTime = {"width": "110px", "borderRadius": "25px", "padding": "8px"};
-  const TagIdByRecord = (id:number)=>{
-    defaultRecord(id)
-  }
+  const TagIdByRecord = (id: number) => {
+    defaultRecord(id);
+  };
+  const mainRef = useRef<HTMLDivElement>(null);
+  useEffect(
+    ()=>{
+      if(mainRef.current!==null){
+        mainRef.current.style.height = document.body.clientHeight+"px"
+      }
+},[])
+
   return (
-    <Outer>
+    <Outer ref={mainRef}>
       <Topbar centerContext={true}/>
       <CateAndTimeWrapper>
         <MyCategorySection value={newRecord.category}
@@ -90,7 +98,7 @@ const RecordEdit: React.FC<Props> = (props) => {
                      onChange={(tagId: number) => onChange({tagId})}
                      type={newRecord.category}
                      autoSelectedTag={autoSelectedTag}
-                     TagIdByRecord={id=>TagIdByRecord(id)}/>
+                     TagIdByRecord={id => TagIdByRecord(id)}/>
       </Main>
       <NotesSection value={newRecord.note}
                     onChange={(note: string) => onChange({note})}/>
