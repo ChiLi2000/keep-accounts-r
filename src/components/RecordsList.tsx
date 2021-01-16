@@ -10,7 +10,7 @@ import {Link} from "react-router-dom";
 
 
 const RecordItemWrapper = styled.div`
-  background: #ffff;
+  background: white;
   >a{
   display: grid;
   grid: auto auto / 38px 1fr;

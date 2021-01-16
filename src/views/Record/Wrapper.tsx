@@ -5,7 +5,7 @@ const Main = styled.div`
   flex-direction: column;
   margin:10px 14px;
   padding: 0 16px;
-  background: #ffff;
+  background: white;
   border-radius: 16px;
 `;
 

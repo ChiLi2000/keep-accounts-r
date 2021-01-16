@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {CategorySection} from "views/Account/CategorySection";
 
 const MyCategorySection = styled(CategorySection)`
-  background: #ffff;
+  background: white;
   > ul{
     display: flex;
     justify-content: space-between;

@@ -5,7 +5,7 @@ import React from "react";
 const Wrapper = styled.div`
   text-align: center;
   padding: 10px 14px;
-  background: #ffff;
+  background: white;
 `;
 type Props = {
   valueTime: string

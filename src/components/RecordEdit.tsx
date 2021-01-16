@@ -11,7 +11,7 @@ import {Main, Wrapper} from "./Layout";
 import {useHistory} from "react-router-dom";
 
 const Outer = styled(Wrapper)`
-  background:#ffff;
+  background:white;
 `;
 const CateAndTimeWrapper = styled.section`
   border-top: 1px solid #d3d3d3;
@@ -19,7 +19,6 @@ const CateAndTimeWrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #ffff;
 `;
 const MyCategorySection = styled(CategorySection)`
   width: 60%;
